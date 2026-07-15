@@ -1,0 +1,64 @@
+# Catkin / colcon build outputs
+/build/
+/devel/
+/install/
+/log/
+/build_isolated/
+/devel_isolated/
+/install_isolated/
+/.jws/
+*.catkin_tools/
+
+# Catkin workspace marker
+/.catkin_workspace
+
+# IDE & editor
+/.vscode/
+/.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# CMake / build artefacts
+CMakeCache.txt
+CMakeFiles/
+cmake_install.cmake
+install_manifest.txt
+Makefile
+*.cmake
+!CMakeLists.txt
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.so
+*.egg-info/
+
+# Large model / data / binary files (download separately)
+*.dat
+*.pt
+*.pth
+*.pb
+*.onnx
+*.h5
+*.hdf5
+*.pkl
+*.npz
+*.npy
+*.pcd
+*.ply
+*.bag
+*.map
+*.pgm
+*.yaml~
+
+# Generated / cached ROS artefacts
+*.bag.active
+/cfg/cpp/*
+
+# Audio / temporary generated files
+*.wav
+scriptsgenerated.wav
