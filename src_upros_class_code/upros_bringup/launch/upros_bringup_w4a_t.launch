@@ -1,0 +1,61 @@
+<launch>
+        <!-- 1 四轮全向底盘  2 三轮全向底盘  3 2轮差速底盘 -->
+        <arg name="chassis_type" default="1"/>
+
+        <!-- 机器人大小脑通信节点 -->
+        <node name="upros_driver" pkg="upros_driver" type="upros_driver" output="screen">
+                <rosparam file="$(find upros_driver)/params/base_params_with_imu_w4at.yaml" command="load"/>
+                <param name="chassis_type" type="int" value="$(arg chassis_type)"/>
+        </node>
+
+        <!-- 激光雷达驱动 -->
+        <include file="$(find bluesea2)/launch/lidar_e200_w4a-t.launch" />
+
+        <!--imu驱动 -->
+        <include file="$(find handsfree_ros_imu)/launch/imu_all.launch" />
+
+        <!--相机驱动 -->
+        <include file="$(find orbbec_camera)/launch/dabai_dcw2.launch" />
+
+        <!--机械臂驱动 -->
+        <include file="$(find upros_arm)/launch/control_center.launch" />
+
+        <!-- tf静态变换-底盘到机体 -->
+        <node pkg="tf" type="static_transform_publisher" name="base_footprint_to_base_link" args="0 0 0 0 0 0 base_footprint base_link 100" />
+
+        <!-- tf静态变换-机体到激光雷达 -->
+        <node pkg="tf" type="static_transform_publisher" name="base_link_to_laser_link" args="0.1425 0 0.1 0 0 0 base_link laser_link 100" />
+
+        <!-- tf静态变换-机体到IMU -->
+        <node pkg="tf" type="static_transform_publisher" name="base_link_to_imu_link" args="0 0 0 0 0 0 base_link imu_link 100" />
+
+        <!-- tf静态变换-机体到机械臂基座标系 -->
+        <node pkg="tf" type="static_transform_publisher" name="base_link_to_arm_base_link" args="0.120 0 0.106 0 0 0 base_link arm_base_link 100" />
+
+        <!-- tf静态变换-机体坐标系到相机 -->
+        <node pkg="tf" type="static_transform_publisher" name="base_link_to_camera_link" args="0.172 0.025 0.032 0 0 0 base_link camera_link 100" />
+
+        <!-- tf静态变换-机体到超声波传感器 -->
+        <node pkg="tf" type="static_transform_publisher" name="base_link_to_ulsensor1" args="0.165 0 0.12 0 0 0  base_link ul_sensor1  100" />
+        <node pkg="tf" type="static_transform_publisher" name="base_link_to_ulsensor2" args="0.0 -0.135 0.12 -1.57 0 0  base_link ul_sensor2  100" />
+        <node pkg="tf" type="static_transform_publisher" name="base_link_to_ulsensor3" args="-0.165 0 0.12 3.14 0 0  base_link ul_sensor3  100" />
+        <node pkg="tf" type="static_transform_publisher" name="base_link_to_ulsensor4" args="0.0 0.135 0.12 1.57 0 0  base_link ul_sensor4  100" />
+
+        <!-- tf静态变换-机体到TOF传感器 -->
+        <node pkg="tf" type="static_transform_publisher" name="base_link_to_tof1" args="0.165 0 0.12 0 0 0  base_link tof1  100" />
+        <node pkg="tf" type="static_transform_publisher" name="base_link_to_tof2" args="0.0 -0.135 0.12 -1.57 0 0  base_link tof2  100" />
+        <node pkg="tf" type="static_transform_publisher" name="base_link_to_tof3" args="-0.165 0 0.12 3.14 0 0  base_link tof3  100" />
+        <node pkg="tf" type="static_transform_publisher" name="base_link_to_tof4" args="0.0 0.135 0.12 1.57 0 0  base_link tof4  100" />
+
+        <!-- 机器人模型加载 -->
+        <param name="robot_description" command="$(find xacro)/xacro --inorder '$(find upros_description)/model/upros_base.xacro'" />
+
+        <!-- 依据模型发布TF变换 -->
+        <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher">
+                <param name="rate" value="40.0"/>
+        </node>
+
+        <!--加载robot_pose_ekf节点-->
+        <include file="$(find upros_odometry)/launch/robot_pose_ekf.launch" />
+
+</launch>

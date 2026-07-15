@@ -1,0 +1,10 @@
+int8 TURN_AROUND=0
+int8 GO_STRIGHT=1
+int8 cmd
+geometry_msgs/PoseStamped target_pose
+---
+int8 final_result
+actionlib_msgs/GoalStatus status
+---
+int8 runing
+geometry_msgs/PoseStamped current_position

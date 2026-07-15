@@ -1,0 +1,4 @@
+<launch>
+  <node name="robot_voice_tts_node" pkg="upros_chat" type="tts_player.py" output="screen">
+  </node>
+</launch>

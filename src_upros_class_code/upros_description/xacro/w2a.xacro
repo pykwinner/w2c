@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+
+<robot name="w2" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+    <xacro:include filename="$(find upros_description)/xacro/w2_body.xacro" />
+    <xacro:include filename="$(find upros_description)/xacro/single_arm.xacro" />
+    <xacro:include filename="$(find upros_description)/xacro/diff_drive_controller.xacro" />
+
+    <xacro:w2_body />
+    <xacro:single_arm />
+    <xacro:differential_drive_controller />
+
+	<!-- 使用宏添加机械臂关节控制器 -->  
+	<xacro:transmission_block joint_name="joint_1"/>
+	<xacro:transmission_block joint_name="joint_2"/>
+	<xacro:transmission_block joint_name="joint_3"/>
+	<xacro:transmission_block joint_name="joint_4"/>
+	<xacro:transmission_block joint_name="joint_5"/>
+	<xacro:transmission_block joint_name="claw_joint_1"/>
+	<xacro:transmission_block joint_name="claw_joint_2"/>
+
+</robot>

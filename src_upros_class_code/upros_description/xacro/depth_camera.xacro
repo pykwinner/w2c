@@ -1,0 +1,86 @@
+<?xml version="1.0"?>
+<robot name="depth_camera" xmlns:xacro="http://wiki.ros.org/xacro">
+
+  <!-- 定义相机的基本参数 -->
+  <xacro:property name="camera_name" value="camera" />
+  <xacro:property name="camera_radius" value="0.001" />
+  <xacro:property name="camera_height" value="0.073" />
+  <xacro:property name="camera_front" value="0.20" />
+  <xacro:property name="horizontal_fov" value="${60.0*3.141592653589793/180.0}" />
+  <xacro:property name="image_width" value="640" />
+  <xacro:property name="image_height" value="480" />
+  <xacro:property name="near_clip" value="0.05" />
+  <xacro:property name="far_clip" value="8.0" />
+  <xacro:property name="update_rate" value="20.0" />
+
+  <!-- 定义相机的宏 -->
+  <xacro:macro name="depth_camera" params="prefix">
+
+    <!-- 声明一个相机的link -->
+    <link name="${prefix}_link">
+      <visual>
+        <geometry>
+          <sphere radius="${camera_radius}" />
+        </geometry>
+        <origin xyz="0 0 0" rpy="0 0 0" />
+        <material name="black">
+          <color rgba="0 0 0 1" />
+        </material>
+      </visual>
+      <collision>
+        <geometry>
+          <sphere radius="${camera_radius}" />
+        </geometry>
+      </collision>
+    </link>
+
+    <!-- 相机link与base_link的关节描述 -->
+    <joint name="${prefix}_joint" type="fixed">
+      <parent link="base_link" />
+      <child link="${prefix}_link" />
+      <origin xyz="${camera_front} 0 ${camera_height}" rpy="0 0 0" />
+    </joint>
+
+    <!-- 相机的gazebo驱动描述 -->
+    <gazebo reference="${prefix}_link">
+      <sensor type="depth" name="${prefix}">
+        <always_on>true</always_on>
+        <visualize>false</visualize>
+        <update_rate>${update_rate}</update_rate>
+        <camera>
+          <horizontal_fov>${horizontal_fov}</horizontal_fov>
+          <image>
+            <width>${image_width}</width>
+            <height>${image_height}</height>
+            <format>R8G8B8</format>
+          </image>
+          <clip>
+            <near>${near_clip}</near>
+            <far>${far_clip}</far>
+          </clip>
+        </camera>
+        <!--plugin为ROS的通信接口-->
+        <plugin name="${prefix}_controller" filename="libgazebo_ros_openni_kinect.so">
+          <cameraName>${prefix}</cameraName>
+          <alwaysOn>true</alwaysOn>
+          <updateRate>10</updateRate>
+          <imageTopicName>color/image_raw</imageTopicName>
+          <depthImageTopicName>depth/image_raw</depthImageTopicName>
+          <pointCloudTopicName>depth/points</pointCloudTopicName>
+          <cameraInfoTopicName>color/camera_info</cameraInfoTopicName>
+          <depthImageCameraInfoTopicName>depth/camera_info</depthImageCameraInfoTopicName>
+          <frameName>camera_optical_frame</frameName>
+          <baseline>0.1</baseline>
+          <distortion_k1>0.0</distortion_k1>
+          <distortion_k2>0.0</distortion_k2>
+          <distortion_k3>0.0</distortion_k3>
+          <distortion_t1>0.0</distortion_t1>
+          <distortion_t2>0.0</distortion_t2>
+          <pointCloudCutoff>0.4</pointCloudCutoff>
+        </plugin>
+      </sensor>
+    </gazebo>
+
+  </xacro:macro>
+
+</robot>

@@ -1,0 +1,42 @@
+<launch>
+    <!-- 1 四轮全向底盘  2 三轮全向底盘  3 双轮差速底盘 -->
+    <arg name="chassis_type" default="3"/>
+
+    <!-- 机器人通信节点 -->
+    <node name="zoo_driver" pkg="zoo_bringup" type="zoo_driver" output="screen">
+        <rosparam file="$(find zoo_bringup)/params/base_params_arm.yaml" command="load"/>
+        <param name="chassis_type" type="int" value="$(arg chassis_type)"/>
+    </node>
+
+
+    <!--相机 -->
+    <include file="$(find zoo_bringup)/launch/usb_cam.launch" />
+
+    <!-- tf静态变换-机体-->
+    <node pkg="tf" type="static_transform_publisher" name="base_footprint_to_base_link" 
+        args="0 0 0 0 0 0 base_footprint base_link 100" />
+
+    <!-- tf静态变换-超声波传感器，构型不同，位置不同 -->
+    <node pkg="tf" type="static_transform_publisher" name="base_link_to_ulsensor2" 
+        args="0.142 0.0 0 0 0 0  base_link ul_sensor2  100" />
+
+    <!-- tf静态变换-tof传感器，构型不同，位置不同 -->
+    <node pkg="tf" type="static_transform_publisher" name="base_link_to_tof2" 
+        args="0.142 0.0 0 0 0 0  base_link tof2  100" />
+    
+    <!-- 机器人模型加载 -->
+    <param name="robot_description" command="$(find xacro)/xacro -i '$(find s2a_description)/urdf/s2a_arm.xacro'" />
+    
+    <!-- 兼容moveit控制 -->
+    <node name="s2a_arm_driver" pkg="zoo_bringup" type="s2a_arm_driver" output="screen">
+        <param name="arm_control_action" value="/arm_joint_controller/follow_joint_trajectory" />
+    </node>
+
+
+    <!-- 依据模型发布TF变换 -->
+    <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" >
+        <param name="rate" value="40.0"/>
+    </node>
+
+</launch>
+

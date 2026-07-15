@@ -1,0 +1,72 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="lidar">
+
+  <xacro:property name="laser_radius" value="0.001" />
+
+  <xacro:macro name="lidar" params="prefix:=laser">
+
+    <link name="${prefix}_link">
+      <inertial>
+        <origin xyz="0.000353208493461253 1.96691527473355E-07 -0.0201221997898385" rpy="0 0 0" />
+        <mass value="0.0286837286205052" />
+        <inertia ixx="1.36744565408129E-05" ixy="2.21134123619835E-07" ixz="4.73474118879471E-10"
+          iyy="9.81480326700524E-06" iyz="7.43216749293828E-12" izz="1.6701788304723E-05" />
+      </inertial>
+      <visual>
+        <origin xyz="0 0 0" rpy="0 0 0" />
+        <geometry>
+          <sphere radius="${laser_radius}" />
+        </geometry>
+        <material name="">
+          <color rgba="0.752941176470588 1 1 1" />
+        </material>
+      </visual>
+      <collision>
+        <origin xyz="0 0 0" rpy="0 0 0" />
+        <geometry>
+          <sphere radius="${laser_radius}" />
+        </geometry>
+      </collision>
+    </link>
+
+    <joint name="laser_joint" type="fixed">
+      <origin xyz="0.00103030119583913 0.00720522416129914 0.245" rpy="0 0 0" />
+      <parent link="base_link" />
+      <child link="${prefix}_link" />
+      <axis xyz="0 0 0" />
+    </joint>
+
+    <gazebo reference="${prefix}_link">
+      <sensor type="ray" name="lidar">
+        <visualize>true</visualize>
+        <update_rate>10</update_rate>
+        <ray>
+          <scan>
+            <horizontal>
+              <samples>1800</samples>
+              <resolution>0.2</resolution>
+              <min_angle>-3.14</min_angle>
+              <max_angle>3.14</max_angle>
+            </horizontal>
+          </scan>
+          <range>
+            <min>0.10</min>
+            <max>20.0</max>
+            <resolution>1.0</resolution>
+          </range>
+          <noise>
+            <type>gaussian</type>
+            <mean>0.0</mean>
+            <stddev>0.003</stddev>
+          </noise>
+        </ray>
+        <!--plugin为ROS的通信接口-->
+        <plugin name="gazebo_rplidar" filename="libgazebo_ros_laser.so">
+          <topicName>/scan</topicName>
+          <frameName>laser_link</frameName>
+        </plugin>
+      </sensor>
+    </gazebo>
+
+  </xacro:macro>
+</robot>

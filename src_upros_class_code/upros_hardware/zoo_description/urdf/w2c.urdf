@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<robot name="zoo_two_wheel_diff">
+  <link name="base_footprint">
+  </link>
+
+  <joint name="footprint_joint" type="fixed">
+    <parent link="base_footprint" />
+    <child link="base_link" />
+  </joint>
+
+  <link name="base_link">
+    <inertial>
+      <origin xyz="-0.0017685 0.00071423 0.040342" rpy="0 0 0" />
+      <mass value="2.1268" />
+      <inertia
+        ixx="0.017378"
+        ixy="0.00011307"
+        ixz="0.0021559"
+        iyy="0.021668"
+        iyz="-3.6876E-05"
+        izz="0.023374" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://zoo_description/meshes/zoo_two_wheel_diff/base_link.STL" />
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://zoo_description/meshes/zoo_two_wheel_diff/base_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+
+  <link name="wheel_L_link">
+    <inertial>
+      <origin xyz="-3.7877E-07 -0.013414 4.8127E-07" rpy="0 0 0" />
+      <mass value="0.33784" />
+      <inertia
+        ixx="0.00027827"
+        ixy="1.2914E-09"
+        ixz="1.097E-09"
+        iyy="0.00049641"
+        iyz="-1.6416E-09"
+        izz="0.00027827" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://zoo_description/meshes/zoo_two_wheel_diff/wheel_L_link.STL" />
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://zoo_description/meshes/zoo_two_wheel_diff/wheel_L_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+
+  <joint name="wheel_L_joint" type="continuous">
+    <origin xyz="0 0.1215 -0.02" rpy="0 0 0" />
+    <parent link="base_link" />
+    <child link="wheel_L_link" />
+    <axis xyz="0 -1 0" />
+  </joint>
+
+  <link name="wheel_R_link">
+    <inertial>
+      <origin xyz="-5.5458E-07 0.013414 2.5987E-07" rpy="0 0 0" />
+      <mass value="0.33784" />
+      <inertia
+        ixx="0.00027827"
+        ixy="-1.8915E-09"
+        ixz="1.1877E-09"
+        iyy="0.00049641"
+        iyz="8.8583E-10"
+        izz="0.00027827" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://zoo_description/meshes/zoo_two_wheel_diff/wheel_R_link.STL" />
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://zoo_description/meshes/zoo_two_wheel_diff/wheel_R_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+
+  <joint name="wheel_R_joint" type="continuous">
+    <origin xyz="0 -0.1215 -0.02" rpy="0 0 0" />
+    <parent link="base_link" />
+    <child link="wheel_R_link" />
+    <axis xyz="0 -1 0" />
+  </joint>
+  
+</robot>

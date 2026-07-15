@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="upros_model">
+
+  <xacro:macro name="add_robot_base" params="prefix:=base">
+
+    <link name="base_footprint">
+      <visual>
+        <origin xyz="0 0 0" rpy="0 0 0" />
+        <geometry>
+          <box size="0.01 0.01 0.001" />
+        </geometry>
+      </visual>
+    </link>
+
+    <!-- base -->
+    <link name="base_link">
+      <visual>
+        <geometry>
+          <box size="0.01 0.01 0.001" />
+        </geometry>
+        <origin rpy = "0 0 0" xyz = "0 0 0"/>
+      </visual>
+    </link>
+    <joint name="base_joint" type="fixed">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <parent link="base_footprint"/>
+      <child link="base_link" />
+    </joint>
+
+    <!--机器人本体-->
+    <link name="upros_link">
+      <inertial>
+        <origin xyz="0.00990256637636911 -0.000233099285928299 -0.0269453782945296" rpy="0 0 0" />
+        <mass value="4.64651934849013" />
+        <inertia ixx="0.0361863875028785" ixy="-0.000151003701672738" ixz="0.00113736353258401" iyy="0.0676233905792322" iyz="3.12636054526789E-05" izz="0.0860494148654495" />
+      </inertial>
+      <visual>
+        <origin xyz="0 0 0" rpy="0 0 0" />
+        <geometry>
+          <mesh filename="package://upros_description/meshes/upros_link.STL" />
+        </geometry>
+        <material name="">
+          <color rgba="0 0 0 1" />
+        </material>
+      </visual>
+      <collision>
+        <origin xyz="0 0 0" rpy="0 0 0" />
+        <geometry>
+          <mesh filename="package://upros_description/meshes/upros_link.STL" />
+        </geometry>
+      </collision>
+    </link>
+
+    <joint name="upros_joint" type="fixed">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <parent link="base_link"/>
+      <child link="upros_link" />
+    </joint>
+
+    <gazebo reference="upros_link">
+      <material>Gazebo/Gray</material>
+    </gazebo>
+
+    <!--左前方轮子-->
+    <link name="upros_lf_link">
+      <inertial>
+        <origin xyz="1.51448298346679E-13 -0.0198826495522133 1.17588924708478E-12" rpy="0 0 0" />
+        <mass value="0.159788327535794" />
+        <inertia ixx="7.23440903269157E-05" ixy="1.09010819011075E-15" ixz="1.45322256606285E-11" iyy="9.73436203826454E-05" iyz="1.48417568628802E-15" izz="7.23440969872859E-05" />
+      </inertial>
+      <visual>
+        <origin xyz="0 0 0" rpy="0 0 0" />
+        <geometry>
+          <mesh filename="package://upros_description/meshes/upros_lf_link.STL" />
+        </geometry>
+        <material name="">
+          <color rgba="0.203921568627451 0.203921568627451 0.203921568627451 1" />
+        </material>
+      </visual>
+      <collision>
+        <origin xyz="0 0 0" rpy="0 0 0" />
+        <geometry>
+          <mesh filename="package://upros_description/meshes/upros_lf_link.STL" />
+        </geometry>
+      </collision>
+    </link>
+    <joint name="upros_lf_joint" type="continuous">
+      <origin xyz="0.11153 0.12806 -0.071" rpy="0 0 0" />
+      <parent link="upros_link" />
+      <child link="upros_lf_link" />
+      <axis xyz="0 -1 0" />
+    </joint>
+    <transmission name="upros_lf_transmission">
+      <type>transmission_interface/SimpleTransmission</type>
+      <joint name="upros_lf_joint">
+        <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+      </joint>
+      <actuator name="upros_lf_motor">
+        <hardwareInterface>PositionJointInterface</hardwareInterface>
+        <mechanicalReduction>1</mechanicalReduction>
+      </actuator>
+    </transmission>
+
+    <!--左后方轮子-->
+    <link name="upros_lb_link">
+      <inertial>
+        <origin xyz="-6.77402578475039E-13 -0.0198539824367272 1.13543202617805E-12" rpy="0 0 0" />
+        <mass value="0.159772422944041" />
+        <inertia ixx="7.23876857173119E-05" ixy="-9.3343604872748E-16" ixz="-1.13074752308852E-12" iyy="9.73739502337608E-05" iyz="-3.34133476054592E-15" izz="7.23877021920972E-05" />
+      </inertial>
+      <visual>
+        <origin xyz="0 0 0" rpy="0 0 0" />
+        <geometry>
+          <mesh filename="package://upros_description/meshes/upros_lb_link.STL" />
+        </geometry>
+        <material name="">
+          <color rgba="0.203921568627451 0.203921568627451 0.203921568627451 1" />
+        </material>
+      </visual>
+      <collision>
+        <origin xyz="0 0 0" rpy="0 0 0" />
+        <geometry>
+          <mesh filename="package://upros_description/meshes/upros_lb_link.STL" />
+        </geometry>
+      </collision>
+    </link>
+    <joint name="upros_lb_joint" type="continuous">
+      <origin xyz="-0.10847 0.12786 -0.071" rpy="0 0 0" />
+      <parent link="upros_link" />
+      <child link="upros_lb_link" />
+      <axis xyz="0 -1 0" />
+    </joint>
+    <transmission name="upros_lb_transmission">
+      <type>transmission_interface/SimpleTransmission</type>
+      <joint name="upros_lb_joint">
+        <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+      </joint>
+      <actuator name="upros_lb_motor">
+        <hardwareInterface>PositionJointInterface</hardwareInterface>
+        <mechanicalReduction>1</mechanicalReduction>
+      </actuator>
+    </transmission>
+
+    <!--右后方轮子-->
+    <link name="upros_rb_link">
+      <inertial>
+        <origin xyz="-1.03131392314992E-12 0.0198826496059463 -4.54927762127966E-13" rpy="0 0 0" />
+        <mass value="0.159788327528769" />
+        <inertia ixx="7.23440955744268E-05" ixy="9.91681911120179E-16" ixz="-1.35676049140191E-11" iyy="9.73436236105832E-05" iyz="1.48029180200028E-15" izz="7.2344094827861E-05" />
+      </inertial>
+      <visual>
+        <origin xyz="0 0 0" rpy="0 0 0" />
+        <geometry>
+          <mesh filename="package://upros_description/meshes/upros_rb_link.STL" />
+        </geometry>
+        <material name="">
+          <color rgba="0.203921568627451 0.203921568627451 0.203921568627451 1" />
+        </material>
+      </visual>
+      <collision>
+        <origin xyz="0 0 0" rpy="0 0 0" />
+        <geometry>
+          <mesh filename="package://upros_description/meshes/upros_rb_link.STL" />
+        </geometry>
+      </collision>
+    </link>
+    <joint name="upros_rb_joint" type="continuous">
+      <origin xyz="-0.10847 -0.12814 -0.071" rpy="0 0 0" />
+      <parent link="upros_link" />
+      <child link="upros_rb_link" />
+      <axis xyz="0 -1 0" />
+    </joint>
+    <transmission name="upros_rb_transmission">
+      <type>transmission_interface/SimpleTransmission</type>
+      <joint name="upros_rb_joint">
+        <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+      </joint>
+      <actuator name="upros_rb_motor">
+        <hardwareInterface>PositionJointInterface</hardwareInterface>
+        <mechanicalReduction>1</mechanicalReduction>
+      </actuator>
+    </transmission>
+
+    <!--右前方轮子-->
+    <link name="upros_rf_link">
+      <inertial>
+        <origin xyz="1.29452004671293E-12 0.0198539822683246 4.92900859017098E-13" rpy="0 0 0" />
+        <mass value="0.15977242295753" />
+        <inertia ixx="7.23876888768729E-05" ixy="1.47412054347701E-15" ixz="5.86056571501839E-12" iyy="9.73739494268177E-05" iyz="3.25375737053332E-15" izz="7.23876986515347E-05" />
+      </inertial>
+      <visual>
+        <origin xyz="0 0 0" rpy="0 0 0" />
+        <geometry>
+          <mesh filename="package://upros_description/meshes/upros_rf_link.STL" />
+        </geometry>
+        <material name="">
+          <color rgba="0.203921568627451 0.203921568627451 0.203921568627451 1" />
+        </material>
+      </visual>
+      <collision>
+        <origin xyz="0 0 0" rpy="0 0 0" />
+        <geometry>
+          <mesh filename="package://upros_description/meshes/upros_rf_link.STL" />
+        </geometry>
+      </collision>
+    </link>
+    <joint name="upros_rf_joint" type="continuous">
+      <origin xyz="0.11153 -0.12834 -0.071" rpy="0 0 0" />
+      <parent link="upros_link" />
+      <child link="upros_rf_link" />
+      <axis xyz="0 -1 0" />
+    </joint>
+    <transmission name="upros_rf_transmission">
+      <type>transmission_interface/SimpleTransmission</type>
+      <joint name="upros_rf_joint">
+        <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+      </joint>
+      <actuator name="upros_rf_motor">
+        <hardwareInterface>PositionJointInterface</hardwareInterface>
+        <mechanicalReduction>1</mechanicalReduction>
+      </actuator>
+    </transmission>
+
+    <!-- Gazebo plugin for upros -->
+    <gazebo>
+      <plugin name="base_controller" filename="libupros_plugin.so">
+        <publishOdometryTf>true</publishOdometryTf>
+        <commandTopic>cmd_vel</commandTopic>
+        <odometryTopic>odom</odometryTopic>
+        <odometryFrame>odom_combined</odometryFrame>
+        <odometryRate>20.0</odometryRate>
+        <robotBaseFrame>base_footprint</robotBaseFrame>
+      </plugin>
+    </gazebo>
+
+  </xacro:macro>
+
+</robot>

@@ -1,0 +1,4 @@
+<launch>
+    <node name="control_center" pkg="zoo_arm" type="zoo_arm_control" output="screen">
+    </node>
+</launch>

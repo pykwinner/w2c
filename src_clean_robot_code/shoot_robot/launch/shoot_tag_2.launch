@@ -1,0 +1,5 @@
+<launch>
+  <node pkg="shoot_robot" type="apriltag_detect_node" name="apriltag_detect_node" output="screen">
+      <param name="tag" value="2" />
+  </node>
+</launch>

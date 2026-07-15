@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- This URDF was automatically created by SolidWorks to URDF Exporter! Originally created by Stephen Brawner (brawner@gmail.com) 
+     Commit Version: 1.6.0-4-g7f85cfe  Build Version: 1.6.7995.38578
+     For more information, please see http://wiki.ros.org/sw_urdf_exporter -->
+<robot
+  name="zoo_three_wheel_omni">
+  <!-- <link name="dummy">
+
+  </link>
+  <joint name="dummy_joint" type="fixed">
+     <parent link="dummy"/>
+     <child link="base_link"/>
+   </joint> -->
+  <link
+    name="base_link">
+    <inertial>
+      <origin
+        xyz="-7.769E-05 -2.2214E-11 0.016319"
+        rpy="0 0 0" />
+      <mass
+        value="1.8046" />
+      <inertia
+        ixx="0.010861"
+        ixy="-1.8305E-12"
+        ixz="-2.3461E-07"
+        iyy="0.012596"
+        iyz="-5.3682E-11"
+        izz="0.014728" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://zoo_description/meshes/zoo_three_wheel_omni/base_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.89804 0.91765 0.92941 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://zoo_description/meshes/zoo_three_wheel_omni/base_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <link
+    name="wheel_lf_link">
+    <inertial>
+      <origin
+        xyz="-5.7382E-06 -0.0079002 -8.7026E-06"
+        rpy="0 0 0" />
+      <mass
+        value="0.072873" />
+      <inertia
+        ixx="2.7696E-05"
+        ixy="5.9523E-10"
+        ixz="4.7581E-09"
+        iyy="4.9411E-05"
+        iyz="-2.5333E-10"
+        izz="2.7703E-05" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://zoo_description/meshes/zoo_three_wheel_omni/wheel_lf_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="1 1 1 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://zoo_description/meshes/zoo_three_wheel_omni/wheel_lf_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="wheel_lf_joint"
+    type="continuous">
+    <origin
+      xyz="0.077173 0.13379 -0.02"
+      rpy="0 0 -0.5236" />
+    <parent
+      link="base_link" />
+    <child
+      link="wheel_lf_link" />
+    <axis
+      xyz="0 1 0" />
+  </joint>
+  <link
+    name="wheel_rl_link">
+    <inertial>
+      <origin
+        xyz="5.7915E-06 0.0079002 -8.6846E-06"
+        rpy="0 0 0" />
+      <mass
+        value="0.072874" />
+      <inertia
+        ixx="2.7696E-05"
+        ixy="5.4302E-10"
+        ixz="-4.7793E-09"
+        iyy="4.9411E-05"
+        iyz="2.3616E-10"
+        izz="2.7703E-05" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://zoo_description/meshes/zoo_three_wheel_omni/wheel_rl_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="1 1 1 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://zoo_description/meshes/zoo_three_wheel_omni/wheel_rl_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="wheel_rl_joint"
+    type="continuous">
+    <origin
+      xyz="0.077173 -0.13379 -0.02"
+      rpy="0 0 0.5236" />
+    <parent
+      link="base_link" />
+    <child
+      link="wheel_rl_link" />
+    <axis
+      xyz="0 -1 0" />
+  </joint>
+  <link
+    name="wheel_b_link">
+    <inertial>
+      <origin
+        xyz="0.0079006 -5.6406E-06 -8.6364E-06"
+        rpy="0 0 0" />
+      <mass
+        value="0.072873" />
+      <inertia
+        ixx="4.9411E-05"
+        ixy="-5.9086E-10"
+        ixz="1.9963E-10"
+        iyy="2.7696E-05"
+        iyz="4.8457E-09"
+        izz="2.7703E-05" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://zoo_description/meshes/zoo_three_wheel_omni/wheel_b_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="1 1 1 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://zoo_description/meshes/zoo_three_wheel_omni/wheel_b_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="wheel_b_joint"
+    type="continuous">
+    <origin
+      xyz="-0.15455 0 -0.02"
+      rpy="0 0 0" />
+    <parent
+      link="base_link" />
+    <child
+      link="wheel_b_link" />
+    <axis
+      xyz="-1 0 0" />
+  </joint>
+</robot>

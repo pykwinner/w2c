@@ -1,0 +1,7 @@
+<launch>
+
+    <node name="upros_moveit_controller" pkg="upros_moveit" type="upros_moveit_controller" output="screen">
+        <param name="arm_control_action" value="/arm_joint_controller/follow_joint_trajectory" />
+    </node>
+
+</launch>

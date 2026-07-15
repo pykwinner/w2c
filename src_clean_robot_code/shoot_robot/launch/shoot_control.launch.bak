@@ -1,0 +1,3 @@
+<launch>
+    <node name="shoot_control" pkg="shoot_robot" type="shoot_node" output="screen"/>
+</launch>

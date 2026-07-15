@@ -1,0 +1,50 @@
+<launch>
+    <!-- 设置launch文件的参数 -->
+    <arg name="paused" default="false" />
+    <arg name="use_sim_time" default="true" />
+    <arg name="gui" default="true" />
+    <arg name="headless" default="false" />
+    <arg name="debug" default="false" />
+
+    <!-- 运行gazebo仿真环境 -->
+    <include file="$(find gazebo_ros)/launch/empty_world.launch">
+        <arg name="debug" value="$(arg debug)" />
+        <arg name="gui" value="$(arg gui)" />
+        <arg name="paused" value="$(arg paused)" />
+        <arg name="use_sim_time" value="$(arg use_sim_time)" />
+        <arg name="headless" value="$(arg headless)" />
+    </include>
+
+    <!-- 将机器人模型文件加载为参数  -->
+    <param name="robot_description"
+        command="$(find xacro)/xacro --inorder '$(find s2a_description)/urdf/s2a_arm.xacro'" />
+
+    <!-- gazebo读取机器人模型参数，加载在场景中  -->
+    <node name="spawn_model" pkg="gazebo_ros" type="spawn_model"
+        args="-urdf -model s2a -x 0.0 -y 0.0 -z 0.0 -R 0.0 -P 0.0 -Y 0.0 -param robot_description"
+        output="screen" />
+
+    <!-- 加载节点，反馈gazebo中每个关节的位置，ns与xacro对应  -->
+    <rosparam file="$(find s2a_description)/config/s2a_gazebo_joint_states.yaml" command="load" />
+    <node name="joint_controller_spawner" pkg="controller_manager" type="spawner" respawn="false"
+        output="screen" ns="/" args="joint_state_controller" />
+
+    <!-- 加载节点，对gazabo中每个关节控制，ns与xacro对应  -->
+    <rosparam file="$(find s2a_description)/config/s2a_trajectory_control.yaml" command="load" />
+    <node name="arm_controller_spawner" pkg="controller_manager" type="spawner" respawn="false"
+        output="screen" ns="/" args="arm_joint_controller" />
+
+    <!-- 运行robot_state_publisher节点，发布tf  -->
+    <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher"
+        output="screen">
+    </node>
+    
+    <!-- 打开rviz显示  -->
+    <!--node
+    name="rviz" pkg="rviz" type="rviz" args="-d $(find s2a_description)/rviz/s2a.rviz" /-->
+
+    <!-- 发布map到机械臂基坐标变换，方便显示  -->
+    <node pkg="tf" type="static_transform_publisher" name="map_to_base_link_broadcaster"
+        args="0 0 0 0 0 0 map base_footprint 100" />
+
+</launch>

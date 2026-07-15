@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<robot name="w2a_body">
+
+    <link name="base_footprint">
+    </link>
+
+    <link name="base_link">
+        <inertial>
+            <origin xyz="-0.00183994912012901 0.000718384784481402 0.040896257051146" rpy="0 0 0" />
+            <mass value="2.11446326748896" />
+            <inertia ixx="0.0172522550977486" ixy="0.000112962512291742" ixz="0.00215471233797688"
+                iyy="0.0214703513066925" iyz="-3.60344762320202E-05" izz="0.0232865128652866" />
+        </inertial>
+        <visual>
+            <origin xyz="0 0 0" rpy="0 0 0" />
+            <geometry>
+                <mesh filename="package://upros_description/meshes/W2C/base_link.STL" />
+            </geometry>
+            <material name="">
+                <color rgba="0.898039215686275 0.917647058823529 0.929411764705882 1" />
+            </material>
+        </visual>
+        <collision>
+            <origin xyz="0 0 0" rpy="0 0 0" />
+            <geometry>
+                <mesh filename="package://upros_description/meshes/W2C/base_link.STL" />
+            </geometry>
+        </collision>
+    </link>
+    <joint name="base_footprint_joint" type="fixed">
+        <parent link="base_footprint" />
+        <child link="base_link" />
+    </joint>
+
+    <link name="wheel_L_link">
+        <inertial>
+            <origin xyz="-3.78770996320736E-07 -0.013414250594195 4.81266645289274E-07" rpy="0 0 0" />
+            <mass value="0.337836569375269" />
+            <inertia ixx="0.000278270805900081" ixy="1.29138084160578E-09"
+                ixz="1.09699819030228E-09" iyy="0.000496405737651082" iyz="-1.64156177606385E-09"
+                izz="0.000278271727426874" />
+        </inertial>
+        <visual>
+            <origin xyz="0 0 0" rpy="0 0 0" />
+            <geometry>
+                <mesh filename="package://upros_description/meshes/W2C/wheel_L_link.STL" />
+            </geometry>
+            <material name="">
+                <color rgba="0.752941176470588 0.752941176470588 0.752941176470588 1" />
+            </material>
+        </visual>
+        <collision>
+            <origin xyz="0 0 0" rpy="0 0 0" />
+            <geometry>
+                <mesh filename="package://upros_description/meshes/W2C/wheel_L_link.STL" />
+            </geometry>
+        </collision>
+    </link>
+    <joint name="wheel_L_joint" type="continuous">
+        <origin xyz="0 0.1215 -0.02" rpy="0 0 0" />
+        <parent link="base_link" />
+        <child link="wheel_L_link" />
+        <axis xyz="0 1 0" />
+    </joint>
+
+    <link name="wheel_R_link">
+        <inertial>
+            <origin xyz="-5.54575135339762E-07 0.013414250594195 2.59868179624395E-07" rpy="0 0 0" />
+            <mass value="0.337836569375269" />
+            <inertia ixx="0.000278271195902002" ixy="-1.89148049635397E-09"
+                ixz="1.18772924132671E-09" iyy="0.000496405737651082" iyz="8.85827903470683E-10"
+                izz="0.000278271337424954" />
+        </inertial>
+        <visual>
+            <origin xyz="0 0 0" rpy="0 0 0" />
+            <geometry>
+                <mesh filename="package://upros_description/meshes/W2C/wheel_R_link.STL" />
+            </geometry>
+            <material name="">
+                <color rgba="0.752941176470588 0.752941176470588 0.752941176470588 1" />
+            </material>
+        </visual>
+        <collision>
+            <origin xyz="0 0 0" rpy="0 0 0" />
+            <geometry>
+                <mesh filename="package://upros_description/meshes/W2C/wheel_R_link.STL" />
+            </geometry>
+        </collision>
+    </link>
+    <joint name="wheel_R_joint" type="continuous">
+        <origin xyz="0 -0.1215 -0.02" rpy="0 0 0" />
+        <parent link="base_link" />
+        <child link="wheel_R_link" />
+        <axis xyz="0 1 0" />
+    </joint>
+
+    <link name="front_Link">
+        <inertial>
+            <origin xyz="0 0 0" rpy="0 0 0" />
+            <mass value="0.0063074121665526" />
+            <inertia ixx="3.34755925557046E-07" ixy="-1.45392467961487E-22"
+                ixz="2.42001994301979E-24" iyy="4.93530086138426E-07" iyz="6.44209161389679E-25"
+                izz="3.34755925557046E-07" />
+        </inertial>
+        <visual>
+            <origin xyz="0 0 0" rpy="0 0 0" />
+            <geometry>
+                <mesh filename="package://upros_description/meshes/W2C/wheel_B_Link.STL" />
+            </geometry>
+            <material name="">
+                <color rgba="0.752941176470588 1 1 1" />
+            </material>
+        </visual>
+        <collision>
+            <origin xyz="0 0 0" rpy="0 0 0" />
+            <geometry>
+                <mesh filename="package://upros_description/meshes/W2C/wheel_B_Link.STL" />
+            </geometry>
+        </collision>
+    </link>
+    <joint name="front_joint" type="continuous">
+        <origin xyz="0.0859999999999999 0 -0.0575" rpy="0 0 0" />
+        <parent link="base_link" />
+        <child link="front_Link" />
+        <axis xyz="1 1 1" />
+    </joint>
+
+    <link name="back_Link">
+        <inertial>
+            <origin xyz="0 0 0" rpy="0 0 0" />
+            <mass value="0.0063074121665526" />
+            <inertia ixx="3.34755925557046E-07" ixy="-1.45392467961487E-22"
+                ixz="2.42001994301979E-24" iyy="4.93530086138426E-07" iyz="6.4420916138968E-25"
+                izz="3.34755925557046E-07" />
+        </inertial>
+        <visual>
+            <origin xyz="0 0 0" rpy="0 0 0" />
+            <geometry>
+                <mesh filename="package://upros_description/meshes/W2C/wheel_A_Link.STL" />
+            </geometry>
+            <material name="">
+                <color rgba="0.752941176470588 1 1 1" />
+            </material>
+        </visual>
+        <collision>
+            <origin xyz="0 0 0" rpy="0 0 0" />
+            <geometry>
+                <mesh filename="package://upros_description/meshes/W2C/wheel_A_Link.STL" />
+            </geometry>
+        </collision>
+    </link>
+    <joint name="back_joint" type="continuous">
+        <origin xyz="-0.0859999999999998 0 -0.0575" rpy="0 0 0" />
+        <parent link="base_link" />
+        <child link="back_Link" />
+        <axis xyz="1 1 1" />
+    </joint>
+
+    <gazebo>
+        <plugin name="differential_drive_controller" filename="libgazebo_ros_diff_drive.so">
+            <!-- 以下是该插件的各项参数设置 -->
+            <!-- 插件的调试级别，设置为 Debug 可以输出更详细的调试信息 -->
+            <rosDebugLevel>Debug</rosDebugLevel>
+            <!-- 是否发布车轮的 TF 变换，这里设置为 false 表示不发布 -->
+            <publishWheelTF>false</publishWheelTF>
+            <!-- 机器人命名空间，这里设置为根命名空间，通常用于区分不同的机器人或组件 -->
+            <robotNamespace>/</robotNamespace>
+            <!-- 是否发布 TF 变换，1 表示发布，0 表示不发布 -->
+            <publishTf>1</publishTf>
+            <!-- 是否发布车轮关节的状态信息，设置为 true 表示发布 -->
+            <publishWheelJointState>true</publishWheelJointState>
+            <!-- 插件是否始终处于开启状态，true 表示一直开启 -->
+            <alwaysOn>true</alwaysOn>
+            <!-- 插件的更新频率，单位是 Hz，这里设置为 100.0Hz -->
+            <updateRate>100.0</updateRate>
+            <!-- 是否使用传统模式，true 表示使用传统模式 -->
+            <legacyMode>true</legacyMode>
+            <!-- 左车轮关节的名称，需要与机器人模型中定义的左车轮关节名称一致 -->
+            <leftJoint>wheel_L_joint</leftJoint>
+            <!-- 右车轮关节的名称，需要与机器人模型中定义的右车轮关节名称一致 -->
+            <rightJoint>wheel_R_joint</rightJoint>
+            <!-- 左右车轮之间的间距，单位是米，这里设置为 0.21 米 -->
+            <wheelSeparation>0.21</wheelSeparation>
+            <!-- 车轮的直径，单位是米，这里设置为 0.10 米 -->
+            <wheelDiameter>0.10</wheelDiameter>
+            <!-- 是否广播 TF 变换，1 表示广播，0 表示不广播 -->
+            <broadcastTF>1</broadcastTF>
+            <!-- 车轮的最大扭矩，单位是 Nm，这里设置为 100 Nm -->
+            <wheelTorque>100</wheelTorque>
+            <!-- 车轮的最大加速度，单位是 rad/s²，这里设置为 1.8 rad/s² -->
+            <wheelAcceleration>1.8</wheelAcceleration>
+            <!-- 控制指令的话题，机器人通常通过向该话题发送速度命令来控制移动 -->
+            <commandTopic>cmd_vel</commandTopic>
+            <!-- 里程计的坐标系名称，通常为 odom -->
+            <odometryFrame>odom</odometryFrame>
+            <!-- 里程计信息的话题名称，用于发布机器人的里程计信息 -->
+            <odometryTopic>odom</odometryTopic>
+            <!-- 机器人底盘的坐标系名称，通常为 base_footprint -->
+            <robotBaseFrame>base_footprint</robotBaseFrame>
+        </plugin>
+    </gazebo>
+
+</robot>

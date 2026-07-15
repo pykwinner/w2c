@@ -1,0 +1,12 @@
+<launch>
+  <!-- 启动Gazebo -->
+  <include file="$(find gazebo_ros)/launch/empty_world.launch"/>
+  <!-- 发布URDF模型到参数服务器 -->
+  <param name="robot_description" command="$(find xacro)/xacro --inorder '$(find upros_description)/xacro/w2.xacro'" />
+  <!-- 在Gazebo中生成机器人模型 -->
+  <node name="urdf_spawner" pkg="gazebo_ros" type="spawn_model" args="-urdf -model two_link_robot -param robot_description"/>
+  <!-- 运行robot_state_publisher节点，发布tf  -->
+  <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" output="screen">
+    <param name="publish_frequency" type="double" value="50.0" />
+  </node>
+</launch>

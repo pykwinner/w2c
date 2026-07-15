@@ -1,0 +1,14 @@
+<launch>
+    <!-- 1 四轮全向底盘  2 三轮全向底盘  3 双轮差速底盘 -->
+    <arg name="chassis_type" default="3"/>
+
+    <!-- 机器人通信节点 -->
+    <node name="zoo_driver" pkg="zoo_bringup" type="zoo_driver" output="screen">
+        <rosparam file="$(find zoo_bringup)/params/base_params_with_imu_w2c.yaml" command="load"/>
+        <param name="chassis_type" type="int" value="$(arg chassis_type)"/>
+    </node>
+
+    <!-- 机器人模型加载 -->
+    <param name="robot_description" command="$(find xacro)/xacro -i '$(find zoo_description)/urdf/w2c.urdf'"/>
+
+</launch>

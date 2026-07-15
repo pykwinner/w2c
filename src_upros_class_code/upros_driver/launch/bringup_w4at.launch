@@ -1,0 +1,15 @@
+<launch>
+        <!-- 1 四轮全向底盘  2 三轮全向底盘  3 2轮差速底盘 -->
+        <arg name="chassis_type" default="1" />
+
+        <!-- 机器人通信节点 -->
+        <node name="upros_driver" pkg="upros_driver" type="upros_driver" output="screen">
+                <rosparam file="$(find upros_driver)/params/base_params_with_imu_w4at.yaml" command="load" />
+                <param name="chassis_type" type="int" value="$(arg chassis_type)" />
+        </node>
+
+        <!-- tf静态变换-机体 -->
+        <node pkg="tf" type="static_transform_publisher" name="base_footprint_to_base_link"
+                args="0 0 0 0 0 0 base_footprint base_link 100" />
+
+</launch>

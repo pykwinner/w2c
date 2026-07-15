@@ -1,0 +1,27 @@
+<launch>
+
+    <!-- 激光雷达驱动 -->
+    <include file="$(find bluesea2)/launch/lidar_e200_w2c.launch" />
+
+    <!--imu驱动 -->
+    <include file="$(find handsfree_ros_imu)/launch/imu_all.launch" />
+
+    <!--相机驱动 -->
+    <include file="$(find orbbec_camera)/launch/dabai_dcw2.launch" />
+
+    <!-- tf静态变换-机体-->
+    <node pkg="tf" type="static_transform_publisher" name="map_to_base_footprint" args="0 0 0 0 0 0 map base_footprint 100"/>
+
+    <!-- tf静态变换-机体-->
+    <node pkg="tf" type="static_transform_publisher" name="base_footprint_to_base_link" args="0 0 0 0 0 0 base_footprint base_link 100"/>
+
+    <!-- tf静态变换-激光雷达-->
+    <node pkg="tf" type="static_transform_publisher" name="base_link_to_laser_link" args="0 0 0.1 0 0 0 base_link laser_link 100"/>
+
+    <!-- tf静态变换-imu -->
+    <node pkg="tf" type="static_transform_publisher" name="base_link_to_imu_link" args="0 0 0 0 0 0 base_link imu_link 100"/>
+
+    <!-- tf静态变换-深度相机 -->
+    <node pkg="tf" type="static_transform_publisher" name="base_link_to_camera_link" args="0.142 0.00 0.10 0 0 0 base_link camera_link 100" />
+
+</launch>

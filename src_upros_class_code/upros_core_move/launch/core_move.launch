@@ -1,0 +1,9 @@
+<launch>
+    <node pkg="upros_core_move" type="core_move_node" name="core_move_node" output="screen">
+        <param name="global_frame" value="map" />
+        <param name="robot_base_frame" value="base_link" />
+        <param name="cmd_vel" value="/cmd_vel" />
+        <param name="error_dist" value="0.1" />
+        <param name="error_angle" value="0.1" />
+    </node>
+</launch>

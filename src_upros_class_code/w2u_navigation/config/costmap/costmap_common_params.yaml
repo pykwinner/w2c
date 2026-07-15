@@ -1,0 +1,32 @@
+#机器人尺寸 W4A W4A-T
+# footprint: [[-0.18, -0.14], [-0.18, 0.14], [0.18, 0.14], [0.18, -0.14]] 
+
+#机器人尺寸 W2U
+footprint: [[-0.15, -0.15], [-0.15, 0.15], [0.15, 0.15], [0.15, -0.15]] 
+
+#设置膨胀层参数
+inflation_layer:
+  enabled: true
+  cost_scaling_factor: 2.5
+  inflation_radius: 1.2
+
+#设置静态层参数
+static_layer:
+  enabled: true
+  map_topic: map
+  track_unknown_space: true
+  trinary_costmap: true
+
+#设置障碍层参数
+obstacle_layer:
+  enabled: true
+  combination_method: 1
+  track_unknown_space: true
+  obstacle_range: 2.5
+  raytrace_range: 3.0
+  observation_sources: scan
+  scan:
+    topic: scan_filtered
+    data_type: LaserScan
+    clearing: true
+    marking: true

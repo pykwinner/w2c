@@ -1,0 +1,5 @@
+<launch> 
+    <include file="$(find upros_bringup)/launch/bringup_w4a.launch" />
+    <include file="$(find upros_navigation)/launch/navigation.launch" />
+    <include file="$(find carry_robot)/launch/recognize_apriltag.launch"/>
+</launch>

@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- This URDF was automatically created by SolidWorks to URDF Exporter! Originally created by Stephen Brawner (brawner@gmail.com) 
+     Commit Version: 1.6.0-4-g7f85cfe  Build Version: 1.6.7995.38578
+     For more information, please see http://wiki.ros.org/sw_urdf_exporter -->
+<robot
+  name="zoo_two_wheel_diff">
+  <link name="dummy">
+
+  </link>
+  <joint name="dummy_joint" type="fixed">
+     <parent link="dummy"/>
+     <child link="base_link"/>
+   </joint>
+  <link
+    name="base_link">
+    <inertial>
+      <origin
+        xyz="-0.0017685 0.00071423 0.040342"
+        rpy="0 0 0" />
+      <mass
+        value="2.1268" />
+      <inertia
+        ixx="0.017378"
+        ixy="0.00011307"
+        ixz="0.0021559"
+        iyy="0.021668"
+        iyz="-3.6876E-05"
+        izz="0.023374" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://zoo_description/meshes/zoo_two_wheel_diff/base_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.89804 0.91765 0.92941 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://zoo_description/meshes/zoo_two_wheel_diff/base_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <link
+    name="wheel_L_link">
+    <inertial>
+      <origin
+        xyz="-3.7877E-07 -0.013414 4.8127E-07"
+        rpy="0 0 0" />
+      <mass
+        value="0.33784" />
+      <inertia
+        ixx="0.00027827"
+        ixy="1.2914E-09"
+        ixz="1.097E-09"
+        iyy="0.00049641"
+        iyz="-1.6416E-09"
+        izz="0.00027827" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://zoo_description/meshes/zoo_two_wheel_diff/wheel_L_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.75294 0.75294 0.75294 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://zoo_description/meshes/zoo_two_wheel_diff/wheel_L_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="wheel_L_joint"
+    type="continuous">
+    <origin
+      xyz="0 0.1215 -0.02"
+      rpy="0 0 0" />
+    <parent
+      link="base_link" />
+    <child
+      link="wheel_L_link" />
+    <axis
+      xyz="0 -1 0" />
+  </joint>
+  <link
+    name="wheel_R_link">
+    <inertial>
+      <origin
+        xyz="-5.5458E-07 0.013414 2.5987E-07"
+        rpy="0 0 0" />
+      <mass
+        value="0.33784" />
+      <inertia
+        ixx="0.00027827"
+        ixy="-1.8915E-09"
+        ixz="1.1877E-09"
+        iyy="0.00049641"
+        iyz="8.8583E-10"
+        izz="0.00027827" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://zoo_description/meshes/zoo_two_wheel_diff/wheel_R_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.75294 0.75294 0.75294 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://zoo_description/meshes/zoo_two_wheel_diff/wheel_R_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="wheel_R_joint"
+    type="continuous">
+    <origin
+      xyz="0 -0.1215 -0.02"
+      rpy="0 0 0" />
+    <parent
+      link="base_link" />
+    <child
+      link="wheel_R_link" />
+    <axis
+      xyz="0 -1 0" />
+  </joint>
+</robot>

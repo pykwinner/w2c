@@ -1,0 +1,4 @@
+<launch>
+  <node pkg="clean_table_robot" type="table_arm_grab_node" name="table_arm_grab_node" output="screen">
+  </node>
+</launch>

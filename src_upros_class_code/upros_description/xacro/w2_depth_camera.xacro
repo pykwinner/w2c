@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+
+<robot name="w2" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+    <xacro:include filename="$(find upros_description)/xacro/w2_body.xacro" />
+    <xacro:include filename="$(find upros_description)/xacro/depth_camera.xacro" /> 
+    <xacro:include filename="$(find upros_description)/xacro/diff_drive_controller.xacro" />
+
+    <xacro:w2_body /> 
+    <xacro:depth_camera prefix="camera"/>  
+    <xacro:differential_drive_controller />
+
+</robot>

@@ -1,0 +1,6 @@
+<launch>
+  <node pkg="web_video_server" name="web_video_server" type="web_video_server"  output="screen">
+  </node>
+  <node pkg="upros_cv" name="yolo_detect" type="upros_yolo_detect.py"  output="screen">
+  </node>
+</launch>

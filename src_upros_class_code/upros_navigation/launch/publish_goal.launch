@@ -1,0 +1,7 @@
+<launch>
+    <node pkg="upros_navigation" type="ros_pub_goal.py" respawn="false" name="ros_pub_goal" output="screen">
+        <param name="goalListX" value="1.0, 2.0" />
+        <param name="goalListY" value="0.0, -1.0" />
+        <param name="goalListYaw" value="0.0, 0.0" />
+    </node>
+</launch>

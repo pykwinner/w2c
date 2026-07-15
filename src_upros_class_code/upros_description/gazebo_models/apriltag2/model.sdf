@@ -1,0 +1,55 @@
+<?xml version='1.0'?>
+<sdf version='1.7'>
+  <model name='apriltag2'>
+    <pose>0 0 0 0 0 0</pose>
+    <static>1</static>
+
+    <link name='Wall_0'>
+      <collision name='Wall_0_Collision'>
+        <geometry>
+          <box>
+            <size>1 1 2.5</size>
+          </box>
+        </geometry>
+      </collision>
+      <visual name='Wall_0_Visual'>
+        <geometry>
+          <box>
+            <size>1 1 2.5</size>
+          </box>
+        </geometry>
+        <material>
+          <script>
+            <uri>file://media/materials/scripts/gazebo.material</uri>
+            <name>Gazebo/Grey</name>
+          </script>
+        </material>
+      </visual>
+    </link>
+
+    <link name='Wall_3'>
+      <collision name='Wall_3_Collision'>
+        <geometry>
+          <box>
+            <size>0.9 0.02 0.9</size>
+          </box>
+        </geometry>
+      </collision>
+      <visual name='Wall_3_Visual'>
+        <geometry>
+          <box>
+            <size>0.9 0.02 0.9</size>
+          </box>
+        </geometry>
+        <material>
+          <script>
+            <uri>model://apriltag2/materials/scripts</uri>
+            <uri>model://apriltag2/materials/textures/</uri>
+            <name>AprilTag/Two</name>
+          </script>
+        </material>
+      </visual>
+    </link>
+
+  </model>
+</sdf>

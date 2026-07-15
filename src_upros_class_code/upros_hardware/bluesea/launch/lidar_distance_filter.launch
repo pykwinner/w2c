@@ -1,0 +1,3 @@
+<launch>
+  <node name="lidar_filter" pkg="bluesea2" type="bluesea2_lidar_filter" output="screen"/>
+</launch>

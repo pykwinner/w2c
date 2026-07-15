@@ -1,0 +1,79 @@
+<?xml version="1.0"?>
+
+<package format="2">
+  <name>shoot_robot</name>
+
+  <version>0.0.0</version>
+
+  <description>
+    Navigation, AprilTag detection and laser shooting control
+    package for the robot vision challenge.
+  </description>
+
+  <maintainer email="songg@todo.todo">
+    songg
+  </maintainer>
+
+  <!-- 原项目没有提供明确许可证，暂时保留 -->
+  <license>TODO</license>
+
+  <!-- ================================================== -->
+  <!-- Catkin构建系统 -->
+  <!-- ================================================== -->
+
+  <buildtool_depend>catkin</buildtool_depend>
+
+  <!-- ================================================== -->
+  <!-- 编译和运行共同依赖 -->
+  <!-- ================================================== -->
+
+  <!-- ROS C++节点 -->
+  <depend>roscpp</depend>
+
+  <!-- /cmd_vel、导航位姿和四元数消息 -->
+  <depend>geometry_msgs</depend>
+
+  <!-- /shoot和/close服务 -->
+  <depend>std_srvs</depend>
+
+  <!-- 激光控制串口 -->
+  <depend>serial</depend>
+
+  <!-- AprilTag识别消息 -->
+  <depend>apriltag_ros</depend>
+
+  <!-- move_base动作客户端 -->
+  <depend>actionlib</depend>
+  <depend>move_base_msgs</depend>
+
+  <!-- tf_echo.cpp使用 -->
+  <depend>tf</depend>
+
+  <!-- 导航目标四元数计算 -->
+  <depend>tf2</depend>
+
+  <!-- ================================================== -->
+  <!-- launch文件运行依赖 -->
+  <!-- ================================================== -->
+
+  <!-- ROS launch系统 -->
+  <exec_depend>roslaunch</exec_depend>
+
+  <!-- W2C底盘、雷达、相机和机器人模型 -->
+  <exec_depend>upros_bringup</exec_depend>
+
+  <!-- W2C差速底盘导航参数 -->
+  <exec_depend>w2u_navigation</exec_depend>
+
+  <!--
+    w2u_navigation/navigation.launch中的地图文件
+    当前仍从upros_navigation/maps目录读取。
+  -->
+  <exec_depend>upros_navigation</exec_depend>
+
+  <!-- 相机AprilTag识别启动文件 -->
+  <exec_depend>clean_desktop_robot</exec_depend>
+
+  <export>
+  </export>
+</package>

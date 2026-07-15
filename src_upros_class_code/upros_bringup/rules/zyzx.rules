@@ -1,0 +1,3 @@
+SUBSYSTEM=="tty",ENV{ID_MODEL_ID}=="7523", MODE="0666", SYMLINK+="zoo"
+SUBSYSTEM=="tty",ENV{ID_MODEL_ID}=="ea60",ENV{ID_MODEL}=="CP2102N_USB_to_UART_Bridge_Controller" MODE="0666", SYMLINK+="lidar"
+SUBSYSTEM=="tty",ENV{ID_MODEL_ID}=="ea60",ENV{ID_MODEL}=="HandsFree_IMU_USB_to_UART_Bridge_Controller" MODE="0666", SYMLINK+="imu"

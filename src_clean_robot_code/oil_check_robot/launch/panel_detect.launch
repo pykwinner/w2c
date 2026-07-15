@@ -1,0 +1,6 @@
+<launch>
+  <node pkg="web_video_server" name="web_video_server" type="web_video_server"  output="screen">
+  </node>
+  <node pkg="oil_check_robot" name="panel_detect" type="panel_identify.py"  output="screen">
+  </node>
+</launch>

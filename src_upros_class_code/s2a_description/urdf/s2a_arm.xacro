@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+
+<robot name="s2a_arm" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+	<xacro:include filename="$(find s2a_description)/urdf/magic_arm.urdf" />
+	<xacro:include filename="$(find s2a_description)/urdf/arm_controller.xacro" />
+	<xacro:transmission_block joint_name="joint_1"/>
+	<xacro:transmission_block joint_name="joint_2"/>
+	<xacro:transmission_block joint_name="joint_3"/>
+	<xacro:transmission_block joint_name="joint_4"/>
+	<xacro:transmission_block joint_name="joint_5"/>
+	<xacro:transmission_block joint_name="claw_joint_1"/>
+	<xacro:transmission_block joint_name="claw_joint_2"/>
+
+</robot>

@@ -1,0 +1,21 @@
+<launch>
+  <arg name="model" />
+
+  <arg name="gui" default="True" />
+
+  <param name="robot_description"
+    command="$(find xacro)/xacro --inorder '$(find s2a_description)/urdf/s2a_arm.xacro'" />
+
+  <param name="use_gui" value="$(arg gui)" />
+
+  <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" />
+
+  <node name="joint_state_publisher_gui" pkg="joint_state_publisher_gui"
+    type="joint_state_publisher_gui" />
+
+  <node name="rviz" pkg="rviz" type="rviz" args="-d $(find s2a_description)/rviz/s2a.rviz" />
+
+  <node pkg="tf" type="static_transform_publisher" name="map_to_base_link_broadcaster"
+    args="0 0 0 0 0 0 map base_footprint 100" />
+    
+</launch>

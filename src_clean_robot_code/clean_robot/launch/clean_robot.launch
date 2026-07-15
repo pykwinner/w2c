@@ -1,0 +1,19 @@
+<launch>
+    <node name="clean_robot" pkg="clean_robot" type="clean_robot" output="screen">
+        <param name="step" value="0.1"/> <!-- 步长 -->
+        <param name="width" value="0.5"/> <!-- 矩形宽度 -->
+        <param name="height" value="0.5"/> <!-- 矩形长度 -->
+
+        <param name="view_x" value="0.32"/> <!-- 视觉识别点x坐标 -->
+        <param name="view_y" value="0.01"/> <!-- 视觉识别点y坐标 -->
+        
+        <param name="start_x_1" value="1.79"/> <!-- 路径1的起始点x坐标（矩形的右下角） -->
+        <param name="start_y_1" value="0.12"/> <!-- 路径1的起始点y坐标（矩形的右下角） -->
+        
+        <param name="start_x_2" value="1.72"/> <!-- 路径2的起始点x坐标（矩形的右上角） -->
+        <param name="start_y_2" value="1.81"/> <!-- 路径2的起始点y坐标（矩形的右上角） -->
+        
+        <param name="start_x_3" value="0.06"/> <!-- 路径3的起始点x坐标（矩形的右下角） -->
+        <param name="start_y_3" value="1.67"/> <!-- 路径3的起始点y坐标（矩形的右下角） -->
+    </node>
+</launch>

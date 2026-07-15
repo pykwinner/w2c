@@ -1,0 +1,6 @@
+<launch>
+   <node pkg="upros_navigation" type="next_goal" respawn="true" name="next_goal" output="screen">
+        <param name="tolerance_goal" value="0.25" />
+        <param name="path_type" value="0" /> 
+    </node>
+</launch>

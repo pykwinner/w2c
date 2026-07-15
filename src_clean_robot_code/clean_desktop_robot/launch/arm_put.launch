@@ -1,0 +1,4 @@
+<launch>
+  <node pkg="clean_desktop_robot" type="arm_put_node" name="arm_put_node" output="screen">
+  </node>
+</launch>

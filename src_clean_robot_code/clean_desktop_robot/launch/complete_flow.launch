@@ -1,0 +1,18 @@
+<launch>
+    <node name="complete_flow_node" pkg="clean_desktop_robot" type="complete_flow_node" output="screen">
+        <!-- 第一张桌子前方的导航点x坐标 -->
+        <param name="grab_1_x" value="1.90"/>
+        <!-- 第一张桌子前方的导航点y坐标 -->
+        <param name="grab_1_y" value="-1.83"/>
+
+        <!-- 第二张桌子前方的导航点x坐标 -->
+        <param name="grab_2_x" value="1.90"/>
+        <!-- 第二张桌子前方的导航点y坐标 -->
+        <param name="grab_2_y" value="-0.35"/>
+        
+        <!-- 放置点相对于抓取点的左侧偏移量，单位为米 -->
+        <param name="offset_left" value="0.4"/>
+        <!-- 放置点相对于抓取点的右侧偏移量，单位为米 -->
+        <param name="offset_right" value="0.4"/>
+    </node>
+</launch>

@@ -1,0 +1,6 @@
+<launch>
+  <include file="$(find upros_bringup)/launch/bringup_w2c.launch" />
+  <include file="$(find upros_navigation)/launch/navigation.launch" />
+  <include file="$(find upros_core_move)/launch/core_move.launch" />
+  <include file="$(find clean_desktop_robot)/launch/recognize_apriltag.launch"/>
+</launch>

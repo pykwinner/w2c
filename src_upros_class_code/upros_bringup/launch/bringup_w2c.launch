@@ -1,0 +1,54 @@
+<launch>
+
+    <!-- 1 四轮全向底盘  2 三轮全向底盘  3 双轮差速底盘 -->
+    <arg name="chassis_type" default="3"/>
+
+    <!-- 机器人通信节点 -->
+    <node name="zoo_driver" pkg="zoo_bringup" type="zoo_driver" output="screen">
+        <rosparam file="$(find zoo_bringup)/params/base_params_with_imu_w2c.yaml" command="load"/>
+        <param name="chassis_type" type="int" value="$(arg chassis_type)"/>
+    </node>
+
+    <!-- 机器人模型加载 -->
+    <param name="robot_description" command="$(find xacro)/xacro -i '$(find zoo_description)/urdf/w2c.urdf'"/>
+
+    <!-- 依据模型发布TF变换 -->
+    <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher">
+        <param name="rate" value="40.0"/>
+    </node>
+
+    <!-- 激光雷达驱动 -->
+    <include file="$(find bluesea2)/launch/lidar_e200_w2c.launch" />
+
+    <!--imu驱动 -->
+    <include file="$(find handsfree_ros_imu)/launch/imu_all.launch" />
+
+    <!--相机驱动 -->
+    <include file="$(find orbbec_camera)/launch/dabai_dcw2.launch" />
+
+    <!-- tf静态变换-机体-->
+    <node pkg="tf" type="static_transform_publisher" name="base_footprint_to_base_link" args="0 0 0 0 0 0 base_footprint base_link 100"/>
+
+    <!-- tf静态变换-激光雷达-->
+    <node pkg="tf" type="static_transform_publisher" name="base_link_to_laser_link" args="0 0 0.1 0 0 0 base_link laser_link 100"/>
+
+    <!-- tf静态变换-imu -->
+    <node pkg="tf" type="static_transform_publisher" name="base_link_to_imu_link" args="0 0 0 0 0 0 base_link imu_link 100"/>
+
+    <!-- tf静态变换-超声波传感器，构型不同，位置不同；1、2、3分别对应左、中、右 -->
+    <node pkg="tf" type="static_transform_publisher" name="base_link_to_ulsensor1" args="0.11 0 0.11 0.785 0 0  base_link ul_sensor1  100"/>
+    <node pkg="tf" type="static_transform_publisher" name="base_link_to_ulsensor2" args="0.142 0.0 0 0 0 0  base_link ul_sensor2  100"/>
+    <node pkg="tf" type="static_transform_publisher" name="base_link_to_ulsensor3" args="0.11 0 0.11 -0.785 0 0  base_link ul_sensor3  100"/>
+
+    <!-- tf静态变换-TOF传感器，构型不同，位置不同；1、2、3分别对应左、中、右 -->
+    <node pkg="tf" type="static_transform_publisher" name="base_link_to_tof1" args="0.11 0 0.11 0.785 0 0  base_link tof1  100"/>
+    <node pkg="tf" type="static_transform_publisher" name="base_link_to_tof2" args="0.142 0.0 0 0 0 0  base_link tof2  100"/>
+    <node pkg="tf" type="static_transform_publisher" name="base_link_to_tof3" args="0.11 0 0.11 -0.785 0 0  base_link tof3  100"/>
+
+    <!-- tf静态变换-深度相机-->
+    <node pkg="tf" type="static_transform_publisher" name="base_link_to_camera_link" args="0.15 0 0.045 0 0 0 base_link camera_link 100"/>
+
+    <!--加载robot_pose_ekf节点-->
+    <include file="$(find upros_odometry)/launch/robot_pose_ekf.launch" />
+
+</launch>

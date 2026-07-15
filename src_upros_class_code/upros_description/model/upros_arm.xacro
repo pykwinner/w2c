@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+
+<robot name="upros" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+	<xacro:include filename="$(find upros_description)/model/upros_description.xacro" />
+	<xacro:include filename="$(find upros_description)/model/lidar.xacro" />
+	<xacro:include filename="$(find upros_description)/model/depth_camera.xacro" />
+	<xacro:include filename="$(find upros_description)/model/imu.xacro" />  
+	<xacro:include filename="$(find upros_description)/model/sonar.xacro"/>  
+	<xacro:include filename="$(find upros_description)/model/single_arm.xacro" />
+
+	<!-- 使用宏添加机器人本体 -->  
+    <xacro:add_robot_base prefix="base"/>
+
+	<!-- 使用宏添加机械臂 --> 
+	<xacro:add_single_arm />
+
+	<!-- 使用宏添加激光雷达 -->  
+	<xacro:add_lidar prefix="laser"/>
+
+	<!-- 使用宏添加相机 -->  
+    <xacro:add_depth_camera prefix="camera"/>  
+
+	<!-- 使用宏添加IMU -->  
+    <xacro:add_imu prefix="imu"/>  
+
+    <!-- 使用宏添加超声波 -->
+    <xacro:add_sonar pos="front" xyz=" 0.182 0 0.03" rpy="0 0 0"/>
+    <xacro:add_sonar pos="left" xyz=" 0.0 0.14 0.03" rpy="0 0 1.5708"/>
+    <xacro:add_sonar pos="right" xyz=" 0.0 -0.14 0.03" rpy="0 0 -1.5708"/>
+    <xacro:add_sonar pos="back" xyz=" -0.182 0 0.03" rpy="0 0 3.1416"/>
+
+	<!-- 使用宏添加机械臂关节控制器 -->  
+	<xacro:transmission_block joint_name="joint_1"/>
+	<xacro:transmission_block joint_name="joint_2"/>
+	<xacro:transmission_block joint_name="joint_3"/>
+	<xacro:transmission_block joint_name="joint_4"/>
+	<xacro:transmission_block joint_name="joint_5"/>
+	<xacro:transmission_block joint_name="claw_joint_1"/>
+	<xacro:transmission_block joint_name="claw_joint_2"/>
+
+</robot>

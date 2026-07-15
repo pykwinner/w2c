@@ -1,0 +1,49 @@
+<launch>
+    <!-- 激光控制串口 -->
+    <arg name="port" default="/dev/arm"/>
+
+    <!-- 串口波特率 -->
+    <arg name="baudrate" default="9600"/>
+
+    <!-- 激光最长连续开启时间，单位：秒 -->
+    <arg name="max_laser_on_time" default="1.0"/>
+
+    <node
+        name="shoot_control"
+        pkg="shoot_robot"
+        type="shoot_node"
+        output="screen">
+
+        <param
+            name="port"
+            value="$(arg port)"/>
+
+        <param
+            name="baudrate"
+            value="$(arg baudrate)"/>
+
+        <param
+            name="serial_timeout_ms"
+            value="200"/>
+
+        <param
+            name="max_laser_on_time"
+            value="$(arg max_laser_on_time)"/>
+
+        <param
+            name="close_retry_interval"
+            value="0.20"/>
+
+        <param
+            name="close_failure_report_threshold"
+            value="10"/>
+
+        <param
+            name="shoot_service"
+            value="/shoot"/>
+
+        <param
+            name="close_service"
+            value="/close"/>
+    </node>
+</launch>

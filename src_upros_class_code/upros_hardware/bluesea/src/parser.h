@@ -1,0 +1,295 @@
+#ifndef _PARSER_
+#define _PARSER_
+#include <arpa/inet.h>
+#include <string>
+#include<iostream>
+#define DF_UNIT_IS_MM 0x0001
+#define DF_WITH_INTENSITY 0X0002
+#define DF_DESHADOWED 0x0004
+#define DF_SMOOTHED 0x0008
+#define DF_FAN_90 0x0020
+#define DF_WITH_RPM 0X0040
+#define DF_WITH_RESAMPLE 0X0010
+#define DF_WITH_RESAMPLE_SOFT 0X0080
+#define DF_MOTOR_REVERSE 0x0100
+#define DF_WITH_UUID 0X1000
+
+#define EF_ENABLE_ALARM_MSG 0X10000
+
+#define MAX_FANS 120
+
+#define MAX_POINTS 500
+
+// #define ANYONE 0x1234abcd
+#define ANYONE -1
+
+#define HDR_SIZE 6
+#define HDR2_SIZE 8
+#define HDR3_SIZE 16
+#define HDR7_SIZE 28
+#define HDR99_SIZE 32
+#define BUF_SIZE 8 * 1024
+
+#define getbit(x, y) ((x) >> (y)&1) // 获取X的Y位置数据
+#define setbit(x, y) x |= (1 << y)	// 将X的第Y位置1
+#define clrbit(x, y) x &= ~(1 << y) // 将X的第Y位清0
+
+struct DataPoint
+{
+	uint16_t idx;
+	// int angle;
+	double degree;
+	uint16_t distance; // mm
+	uint8_t confidence;
+};
+struct CmdHeader
+{
+	unsigned short sign;
+	unsigned short cmd;
+	unsigned short sn;
+	unsigned short len;
+};
+
+struct RawData
+{
+	unsigned short code;
+	unsigned short N;
+	unsigned short angle; // 0.1 degree
+	unsigned short span;  // 0.1 degree
+	unsigned short fbase;
+	unsigned short first;
+	unsigned short last;
+	unsigned short fend;
+	// short ros_angle;	// 0.1 degree
+	DataPoint points[MAX_POINTS];
+	uint32_t ts[2];
+	uint8_t counterclockwise;
+
+	// unsigned short distance[1000];
+	// unsigned char confidence[1000];
+	// float angles[1000];
+};
+struct EEpromV101
+{
+	char label[4];	 // "EPRM"
+	uint16_t pp_ver; // paramter protocol version
+	uint16_t size;	 // total size of this structure
+
+	// uint32_t version;		// firmware version
+
+	// device
+	uint8_t dev_sn[20];
+	uint8_t dev_type[16];
+	uint32_t dev_id; // identiy
+
+	// network
+	uint8_t IPv4[4];
+	uint8_t mask[4];
+	uint8_t gateway[4];
+	uint8_t srv_ip[4];
+	uint16_t srv_port;
+	uint16_t local_port;
+
+	//
+	uint16_t RPM;
+	uint16_t RPM_pulse;
+	uint8_t fir_filter;
+	uint8_t cir;
+	uint16_t with_resample;
+
+	uint8_t auto_start;
+	uint8_t target_fixed;
+	uint8_t with_smooth;
+	uint8_t with_filter;
+
+	//
+	uint8_t ranger_bias[8];
+	uint32_t net_watchdog;
+
+	uint32_t pnp_flags;
+	uint16_t deshadow;
+	uint8_t zone_acted;
+	uint8_t should_post;
+
+	uint8_t functions_map[16];
+	uint8_t reserved[36];
+};
+typedef void *HParser;
+typedef void *HReader;
+typedef void *HPublish;
+
+struct LidarNode
+{
+	HParser hParser;
+	HPublish hPublish;
+	char ip[30];
+	int port;
+	in_addr_t s_addr;
+};
+struct RawDataHdr
+{
+	unsigned short code;
+	unsigned short N;
+	unsigned short angle;
+};
+
+struct RawDataHdr2
+{
+	unsigned short code;
+	unsigned short N;
+	unsigned short angle;
+	unsigned short span;
+};
+
+struct RawDataHdr3
+{
+	unsigned short code;
+	unsigned short N;
+	unsigned short angle;
+	unsigned short span;
+	unsigned short fbase;
+	unsigned short first;
+	unsigned short last;
+	unsigned short fend;
+};
+
+struct RawDataHdr7
+{
+	uint16_t code;
+	uint16_t N;
+	uint16_t whole_fan;
+	uint16_t ofset;
+	uint32_t beg_ang;
+	uint32_t end_ang;
+	uint32_t flags;
+	uint32_t timestamp;
+	uint32_t dev_id;
+};
+
+struct RawDataHdr99
+{
+	uint16_t code;
+	uint16_t N;
+	uint16_t from;
+	uint16_t total;
+	uint32_t flags;
+	uint32_t timestamp;
+	uint32_t dev_no;
+	uint32_t reserved[3];
+};
+
+typedef struct
+{
+	uint16_t code;
+	uint16_t len;
+	uint32_t clk;
+	uint32_t dev_id;
+} PacketUart;
+
+struct FanSegment
+{
+	RawDataHdr7 hdr;
+
+	uint16_t dist[MAX_POINTS];
+	uint16_t angle[MAX_POINTS];
+	uint8_t energy[MAX_POINTS];
+
+	struct FanSegment *next;
+};
+struct CommandList
+{
+	char  uuid[12];
+	char  model[12];
+	char  rpm[12];
+	char  res[12];
+	char  smooth[12];
+	char fitter[12];
+	char confidence[12];
+	char unit_mm[12];
+	
+	char alarm[12];
+	char direction[12];
+	char ats[12];
+
+
+};
+struct Parser
+{
+	bool stream_mode;
+	int rest_len;
+	unsigned char rest_buf[BUF_SIZE];
+	bool with_chk;
+	int raw_mode;
+	uint32_t dev_id;
+	uint32_t flags;
+	FanSegment *fan_segs;
+	int error_circle;
+	float error_scale;
+	bool is_from_zero;
+	char logPath[256];
+	CommandList cmd;
+	char ip[16];
+	int port;
+};
+
+struct UartState
+{
+    //byte1
+    bool unit_mm;//0 cm 1 mm
+    bool with_conf;//0 close 1 open
+    bool with_smooth;
+    bool with_fitter;
+    bool span_9;
+    bool span_18;
+    bool span_other;
+    bool resampele;//重采样
+    //byte2
+
+    bool moter_turn;//0正向 1反向
+    bool span_8;
+    bool span_16;
+    //byte3
+    bool byte3_error0;
+    bool byte3_error1;
+    bool byte3_error2;
+    bool byte3_error3;
+    //byte4
+    bool byte4_error0;
+    bool byte4_error1;
+    bool byte4_error2;
+    bool byte4_error3;
+    bool byte4_error4;
+    bool byte4_error5;
+    bool byte4_error6;
+    bool byte4_error7;
+};
+
+
+
+HParser ParserOpen(int raw_bytes, bool with_chksum, uint32_t dev_id,
+				   int error_circle, double error_scale, bool from_zero,
+				   char *logpath, CommandList cmd, char *ip, int port);
+
+typedef bool (*C_PACK)(int fd_udp, const char* ip, int port,int n, const char *cmd,int nhdr, const char *hdr_str,int nfetch, char *fetch,const char *logPath);
+typedef bool (*S_PACK)(int fd_udp, const char* ip, int port, int n, const char *cmd,void *result,const char *logPath);
+typedef bool (*UART_TALK)(int fd_udp,int n, const char *cmd,int nhdr, const char *hdr_str,int nfetch, char *fetch,const char*logpath);
+typedef bool (*VPC_TALK)(int fd_udp, int mode, int len, const char *cmd, int nfetch, void *result, const char *logpath);
+
+bool setup_lidar_udp(HParser hP, void *func1, void *func2, const char *type, int handle);
+bool setup_lidar_uart(HParser hP, void *func1, void *func2, const char *type, int handle);
+bool setup_lidar_vpc(HParser hP, void *func1, void *func2, const char *type, int handle);
+
+
+int strip(const char *s, char *buf);
+int ParserClose(HParser);
+int ParserRunStream(HParser, int len, unsigned char *buf, RawData *fans[]);
+int ParserRun(LidarNode, int len, unsigned char *buf, RawData *fans[]);
+
+void SetTimeStamp(RawData *);
+void saveLog(const char *logPath, int type, const char *ip, const int port, const unsigned char *buf, unsigned int len);
+int mkpathAll(std::string s, mode_t mode);
+unsigned int stm32crc(unsigned int *ptr, unsigned int len);
+int alarmProc(unsigned char *buf, int len);
+extern char g_uuid[32];
+
+#endif

@@ -1,0 +1,37 @@
+cmake_minimum_required(VERSION 3.0.2)
+project(shoot_robot)
+
+find_package(catkin REQUIRED COMPONENTS
+  roscpp
+  rospy
+  std_msgs
+  serial
+  tf
+)
+
+catkin_package(
+  CATKIN_DEPENDS 
+)
+
+include_directories(include ${catkin_INCLUDE_DIRS})
+
+add_executable(shoot_node src/shoot.cpp)
+target_link_libraries(shoot_node ${catkin_LIBRARIES})
+
+add_executable(apriltag_detect_node src/apriltag_detect.cpp)
+target_link_libraries(apriltag_detect_node ${catkin_LIBRARIES})
+
+add_executable(w2u_tf_echo_node src/tf_echo.cpp)
+target_link_libraries(w2u_tf_echo_node ${catkin_LIBRARIES})
+
+add_executable(movebase_client_node src/movebase_client.cpp)
+target_link_libraries(movebase_client_node ${catkin_LIBRARIES})
+
+add_executable(shoot_robot_node src/shoot_robot.cpp)
+target_link_libraries(shoot_robot_node ${catkin_LIBRARIES})
+
+add_executable(shoot_robot_base_node src/shoot_robot_base.cpp)
+target_link_libraries(shoot_robot_base_node ${catkin_LIBRARIES})
+
+add_executable(w2u_task_flow_node src/task_flow.cpp)
+target_link_libraries(w2u_task_flow_node ${catkin_LIBRARIES})

@@ -1,0 +1,6 @@
+area_path_params:
+  # 单位：像素
+  row_size: 8 #扫描行间距，影响路径之间距离
+  obstacle_radius: 8 #障碍物膨胀半径，影响路径与墙距离
+  main_direction: 2 #主方向，1为x主方向路径，2为y主方向路径
+  min_length: 0.8 #单位：米 线段的最小长度，如果小于该值，线段将被去除

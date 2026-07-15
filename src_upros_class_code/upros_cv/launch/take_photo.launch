@@ -1,0 +1,5 @@
+<launch>
+    <node pkg="upros_cv" name="take_photo" type="take_photo.py" output="screen">
+        <param name="person_name" value="g2"/>
+    </node>
+</launch>

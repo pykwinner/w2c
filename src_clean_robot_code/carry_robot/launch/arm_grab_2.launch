@@ -1,0 +1,5 @@
+<launch>
+  <node pkg="carry_robot" type="w4a_arm_grab_node" name="arm_grab_node" output="screen">
+      <param name="tag" value="tag_2" />
+  </node>
+</launch>

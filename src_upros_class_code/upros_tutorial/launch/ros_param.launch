@@ -1,0 +1,5 @@
+<launch>
+  <node name="parameter" pkg="upros_tutorial" type="ros_param" output="screen">
+    <param name="my_param" value="ros!!!!" />
+  </node>
+</launch>

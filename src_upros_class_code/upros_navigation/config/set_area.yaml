@@ -1,0 +1,7 @@
+enable_area:
+  area_x_pixel: [0, 624]
+  area_y_pixel: [0, 645]
+
+clean_area:
+  area_x_pixel: [0, 624]
+  area_y_pixel: [0, 645]

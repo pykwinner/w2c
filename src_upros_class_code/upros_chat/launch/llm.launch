@@ -1,0 +1,4 @@
+<launch>
+  <node name="robot_voice_llm_node" pkg="upros_chat" type="llm.py" output="screen">
+  </node>
+</launch>

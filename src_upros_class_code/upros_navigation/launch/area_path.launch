@@ -1,0 +1,6 @@
+<launch>
+    <node pkg="upros_navigation" type="area_path_node" name="area_path_node" output="screen" >
+        <rosparam file="$(find upros_navigation)/config/area_path_params.yaml" command="load" />
+        <rosparam file="$(find upros_navigation)/config/set_area.yaml" command="load" />
+    </node>
+</launch>

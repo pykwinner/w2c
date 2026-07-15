@@ -1,0 +1,4 @@
+<launch>
+  <node pkg="oil_check_robot" name="leak_detect" type="leak_detect.py"  output="screen">
+  </node>
+</launch>

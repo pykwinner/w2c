@@ -1,0 +1,8 @@
+<launch>
+  <!-- 启动Gazebo -->
+  <include file="$(find gazebo_ros)/launch/empty_world.launch"/>
+  <!-- 发布URDF模型到参数服务器 -->
+  <param name="robot_description" textfile="$(find upros_description)/urdf/joint.urdf" />
+  <!-- 在Gazebo中生成机器人模型 -->
+  <node name="urdf_spawner" pkg="gazebo_ros" type="spawn_model" args="-urdf -model two_link_robot -param robot_description"/>
+</launch>

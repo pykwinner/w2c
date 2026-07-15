@@ -1,0 +1,10 @@
+<launch>
+    <node pkg="upros_arm" type="inverse_move_node" name="inverse_move_node" output="screen">
+      <param name="servo_bias_1" value="0" type="int"/>
+      <param name="servo_bias_2" value="50" type="int"/>
+      <param name="servo_bias_3" value="20" type="int"/>
+      <param name="servo_bias_4" value="-10" type="int"/>
+      <param name="servo_bias_5" value="0" type="int"/>
+      <param name="servo_bias_6" value="0" type="int"/>
+    </node>    
+</launch>

@@ -1,0 +1,25 @@
+<launch>
+  <arg name="paused" default="false"/>
+  <arg name="use_sim_time" default="true"/>
+  <arg name="gui" default="true"/>
+  <arg name="headless" default="false"/>
+  <arg name="debug" default="false"/>
+
+  <!-- 运行gazebo仿真环境 -->
+  <include file="$(find gazebo_ros)/launch/empty_world.launch">
+    <arg name="debug" value="$(arg debug)" />
+    <arg name="gui" value="$(arg gui)" />
+    <arg name="paused" value="$(arg paused)"/>
+    <arg name="use_sim_time" value="$(arg use_sim_time)"/>
+    <arg name="headless" value="$(arg headless)"/>
+  </include>
+
+  <!-- 加载模型-->
+  <node name="numberone" pkg="gazebo_ros" type="spawn_model" args="-file $(find upros_description)/gazebo_models/number1/model.sdf -x 1.0 -y 1.0 -z 0.0 -Y 0 -sdf -model number1" />
+  <node name="numbertwo" pkg="gazebo_ros" type="spawn_model" args="-file $(find upros_description)/gazebo_models/number2/model.sdf -x 2.0 -y 2.0 -z 0.0 -Y 0 -sdf -model number2" />
+  <node name="numberthr" pkg="gazebo_ros" type="spawn_model" args="-file $(find upros_description)/gazebo_models/number3/model.sdf -x 3.0 -y 3.0 -z 0.0 -Y 0 -sdf -model number3" />
+
+  <!-- 加载自定义-->
+  <node name="box" pkg="gazebo_ros" type="spawn_model" args="-file $(find upros_description)/gazebo_models/box/model.sdf -x 0.0 -y 0.0 -z 0.0 -Y 0 -sdf -model box" />
+
+</launch>

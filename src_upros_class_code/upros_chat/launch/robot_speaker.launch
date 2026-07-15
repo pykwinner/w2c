@@ -1,0 +1,10 @@
+<launch>
+  <node name="robot_voice_speech_node" pkg="upros_chat" type="speech_recognition.py" output="screen">
+  </node>
+
+  <node name="robot_voice_llm_node" pkg="upros_chat" type="llm.py" output="screen">
+  </node>
+
+  <node name="robot_voice_tts_node" pkg="upros_chat" type="tts_player.py" output="screen">
+  </node>
+</launch>

@@ -1,0 +1,23 @@
+<launch>
+  <!-- 启动Gazebo -->
+  <include file="$(find gazebo_ros)/launch/empty_world.launch"/>
+
+  <!-- 发布URDF模型到参数服务器 -->
+  <param name="robot_description" command="$(find xacro)/xacro --inorder '$(find upros_description)/xacro/w2a.xacro'" />
+
+  <!-- 在Gazebo中生成机器人模型 -->
+  <node name="urdf_spawner" pkg="gazebo_ros" type="spawn_model" args="-urdf -model two_link_robot -param robot_description"/>
+  
+  <!-- 运行robot_state_publisher节点，发布tf  -->
+  <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" output="screen">
+    <param name="publish_frequency" type="double" value="50.0" />
+  </node>
+
+  <!-- 加载节点，反馈gazebo中每个关节的位置，ns与xacro对应  -->
+  <rosparam file="$(find upros_description)/config/upros_gazebo_joint_states.yaml" command="load" />
+  <node name="joint_state_spawner" pkg="controller_manager" type="spawner" respawn="false" output="screen" ns="/" args="joint_state_controller" />
+
+  <!-- 加载节点，对gazabo中每个关节控制，ns与xacro对应  -->
+  <rosparam file="$(find upros_description)/config/upros_trajectory_control.yaml" command="load" />
+  <node name="arm_controller_spawner" pkg="controller_manager" type="spawner" respawn="false" output="screen" ns="/" args="arm_joint_controller" />
+</launch>

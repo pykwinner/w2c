@@ -1,0 +1,6 @@
+<launch>
+
+    <node pkg="tf" type="static_transform_publisher" name="base_to_camera" args="0.08 0.0 0.03 0 0 0 arm_base_link camera_link 100" />
+    <node name="tf_pub_colorTocamera" pkg="grab_demo" type="color_detect" output="screen"/>
+    
+</launch>

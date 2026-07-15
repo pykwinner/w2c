@@ -1,0 +1,4 @@
+<launch>
+  <node pkg="carry_robot" type="w4a_arm_put_node" name="arm_put_node" output="screen">
+  </node>
+</launch>

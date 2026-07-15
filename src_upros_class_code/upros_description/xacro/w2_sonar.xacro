@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+
+<robot name="w2" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+    <xacro:include filename="$(find upros_description)/xacro/w2_body.xacro" />
+    <xacro:include filename="$(find upros_description)/xacro/sonar.xacro" /> 
+    <xacro:include filename="$(find upros_description)/xacro/diff_drive_controller.xacro" />
+
+    <xacro:w2_body /> 
+
+    <!-- 使用宏添加超声波 -->
+    <xacro:sonar pos="front" xyz=" 0.182 0 0.03" rpy="0 0 0"/>
+    <xacro:sonar pos="left" xyz=" 0.0 0.14 0.03" rpy="0 0 1.5708"/>
+    <xacro:sonar pos="right" xyz=" 0.0 -0.14 0.03" rpy="0 0 -1.5708"/>
+    <xacro:sonar pos="back" xyz=" -0.182 0 0.03" rpy="0 0 3.1416"/>
+    
+    <xacro:differential_drive_controller />
+
+</robot>

@@ -1,0 +1,48 @@
+port: /dev/zoo
+buadrate: 1000000
+
+# 电机编码器脉冲 64  1792
+motor_encoder: 64.0
+# 电机减速比
+motor_ratio: 90.0
+
+# 两轮差速参数
+diff_wheel_radius: 0.099
+diff_wheel_track: 0.216
+
+# 三轮全向参数
+onmi_wheel_radius: 0.075
+onmi_wheel_track: 0.1466
+
+# 四轮全向参数
+mec_wheel_radius: 0.075
+mec_wheel_track: 0.1466
+
+# tf变换frame
+base_frame: base_footprint
+odom_frame: odom_combined
+
+# 里程计原始信息话题
+odom_topic: wheel_odom
+# imu话题
+imu_topic: /imu/data
+# 是否发布tf变换
+publish_tf: false
+
+# 底盘移动话题
+cmd_vel_topic: /cmd_vel
+# 单个舵机控制话题
+cmd_single_servo_topic: single_servo_topic
+# 多个舵机控制话题
+cmd_multiple_servo_topic: multiple_servo_topic
+
+# 是否发布机械臂关节状态
+publish_joint_state: false
+# 机械臂关节id
+joint1: 1
+joint2: 2
+joint3: 3
+joint4: 4
+joint5: 5
+claw_joint: 6
+joint_state_topic: /joint_states

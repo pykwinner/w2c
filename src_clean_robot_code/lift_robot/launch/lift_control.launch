@@ -1,0 +1,4 @@
+<launch>
+    <node name="lift_control" pkg="lift_robot" type="lift_up" output="screen">
+    </node>
+</launch>

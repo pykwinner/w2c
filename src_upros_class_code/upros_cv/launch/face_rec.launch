@@ -1,0 +1,5 @@
+<launch>
+  <node pkg="upros_cv" name="face_rec" type="face_rec.py"  output="screen">
+    <param name = "confidence" value = "90"/> 
+  </node>
+</launch>

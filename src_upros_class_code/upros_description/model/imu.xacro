@@ -1,0 +1,57 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="imu">
+
+    <xacro:macro name="add_imu" params="prefix:=imu">
+
+        <!-- IMU的link -->
+        <link name="${prefix}_link">
+            <visual>
+                <origin xyz="0 0 0" rpy="0 0 0"/>
+                <geometry>
+                    <!-- 这里假设IMU为一个简单的立方体 -->
+                    <box size="0.001 0.001 0.001"/>
+                </geometry>
+                <material name="gray">
+                    <color rgba="0.5 0.5 0.5 1.0"/>
+                    <!-- 灰色 -->
+                </material>
+            </visual>
+            <collision>
+                <origin xyz="0 0 0" rpy="0 0 0"/>
+                <geometry>
+                    <box size="0.001 0.001 0.001"/>
+                </geometry>
+            </collision>
+            <inertial>
+                <mass value="0.01"/>
+                <!-- 假设质量为0.01kg -->
+                <inertia ixx="0.001" ixy="0" ixz="0" iyy="0.001" iyz="0" izz="0.001"/>
+            </inertial>
+        </link>
+
+        <!-- IMU与父节点的连接joint，这里假设为固定连接 -->
+        <joint name="${prefix}_joint" type="fixed">
+            <parent link="base_link"/>
+            <child link="${prefix}_link"/>
+            <origin xyz="0 0 0.05" rpy="0 0 0"/>
+        </joint>
+
+        <gazebo reference="${prefix}_link">
+            <sensor type="imu" name="imu_sensor">
+                <always_on>true</always_on>
+                <update_rate>50.0</update_rate>
+                <visualize>true</visualize>
+                <plugin name="imu_plugin" filename="libgazebo_ros_imu_sensor.so">
+                    <topicName>imu/data</topicName>
+                    <frameName>imu_link</frameName>
+                    <updateRateHZ>100.0</updateRateHZ>
+                    <gaussianNoise>0.0</gaussianNoise>
+                    <xyzOffset>0 0 0</xyzOffset>
+                    <rpyOffset>0 0 0</rpyOffset>
+                    <initialOrientationAsReference>false</initialOrientationAsReference>
+                </plugin>
+            </sensor>
+        </gazebo>
+
+    </xacro:macro>
+</robot>

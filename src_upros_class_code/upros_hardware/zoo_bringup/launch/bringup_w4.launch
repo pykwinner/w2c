@@ -1,0 +1,58 @@
+<launch>
+    <!-- 1 四轮全向底盘  2 三轮全向底盘  3 2轮差速底盘 -->
+    <arg name="chassis_type" default="1"/>
+
+    <!-- 机器人通信节点 -->
+    <node name="zoo_driver" pkg="zoo_bringup" type="zoo_driver" output="screen">
+        <rosparam file="$(find zoo_bringup)/params/base_params_with_imu.yaml" command="load"/>
+        <param name="chassis_type" type="int" value="$(arg chassis_type)"/>
+    </node>
+
+    <!--激光雷达-->
+    <include file="$(find bluesea2)/launch/lidar_e200_w4.launch" />
+
+    <!--imu -->
+    <include file="$(find handsfree_ros_imu)/launch/imu_all.launch" />
+
+    <!-- tf静态变换-机体 -->
+    <node pkg="tf" type="static_transform_publisher" name="base_footprint_to_base_link" 
+        args="0 0 0 0 0 0 base_footprint base_link 100" />
+
+    <!-- tf静态变换-激光雷达 -->
+    <node pkg="tf" type="static_transform_publisher" name="base_footprint_to_laser_link" 
+        args="0.1425 0 0.1 0 0 0 base_footprint laser_link 100" />
+
+    <!--相机 -->
+    <include file="$(find zoo_bringup)/launch/usb_cam.launch" />
+
+    <!-- tf静态变换-imu -->
+    <node pkg="tf" type="static_transform_publisher" name="base_footprint_to_imu_link"
+        args="0 0 0 0 0 0 base_footprint imu_link 100" />
+    
+    <!-- tf静态变换-超声波传感器 -->
+    <node pkg="tf" type="static_transform_publisher" name="base_link_to_ulsensor1" 
+            args="0.165 0 0.12 0 0 0  base_link ul_sensor1  100" />
+    <node pkg="tf" type="static_transform_publisher" name="base_link_to_ulsensor2" 
+            args="0.0 -0.135 0.12 -1.57 0 0  base_link ul_sensor2  100" />
+    <node pkg="tf" type="static_transform_publisher" name="base_link_to_ulsensor3" 
+            args="-0.165 0 0.12 3.14 0 0  base_link ul_sensor3  100" />
+    <node pkg="tf" type="static_transform_publisher" name="base_link_to_ulsensor4" 
+            args="0.0 0.135 0.12 1.57 0 0  base_link ul_sensor4  100" />
+
+    <!-- tf静态变换-tof传感器 -->
+    <node pkg="tf" type="static_transform_publisher" name="base_link_to_tof1" 
+            args="0.165 0 0.12 0 0 0  base_link tof1  100" />
+    <node pkg="tf" type="static_transform_publisher" name="base_link_to_tof2" 
+            args="0.0 -0.135 0.12 -1.57 0 0  base_link tof2  100" />
+    <node pkg="tf" type="static_transform_publisher" name="base_link_to_tof3" 
+            args="-0.165 0 0.12 3.14 0 0  base_link tof3  100" />
+    <node pkg="tf" type="static_transform_publisher" name="base_link_to_tof4" 
+            args="0.0 0.135 0.12 1.57 0 0  base_link tof4  100" />
+
+    <!-- 机器人模型加载 -->
+    <param name="robot_description" command="$(find xacro)/xacro -i '$(find zoo_description)/urdf/w4.urdf'" />
+
+    <!--ekf融合滤波-->
+    <include file="$(find zoo_bringup)/launch/robot_pose_ekf.launch" />
+
+</launch>

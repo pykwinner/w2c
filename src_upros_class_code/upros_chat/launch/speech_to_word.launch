@@ -1,0 +1,4 @@
+<launch>
+  <node name="robot_voice_speech_node" pkg="upros_chat" type="speech_recognition.py" output="screen">
+  </node>
+</launch>

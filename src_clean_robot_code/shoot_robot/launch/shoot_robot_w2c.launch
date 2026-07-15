@@ -1,0 +1,150 @@
+<launch>
+    <!--
+        是否启动9靶比赛主流程。
+
+        false：
+        只启动底盘、导航、相机、AprilTag和激光控制，
+        小车不会自动执行9靶路线。
+
+        true：
+        启动9靶导航和射击任务。
+    -->
+    <arg
+        name="start_task"
+        default="false"/>
+
+    <!-- 导航使用的地图文件 -->
+    <arg
+        name="map_name"
+        default="my_lab.yaml"/>
+
+    <!-- 激光控制串口 -->
+    <arg
+        name="shooter_port"
+        default="/dev/arm"/>
+
+    <!-- 激光允许连续开启的最长时间 -->
+    <arg
+        name="max_laser_on_time"
+        default="1.0"/>
+
+    <!-- ================================================== -->
+    <!-- 1. 启动W2C底盘、雷达、相机和机器人模型 -->
+    <!-- ================================================== -->
+
+    <include
+        file="$(find upros_bringup)/launch/bringup_w2c.launch"/>
+
+    <!-- ================================================== -->
+    <!-- 2. 启动导航 -->
+    <!-- ================================================== -->
+
+    <!--
+        使用队友在小车上验证过的 upros_navigation。
+        该启动文件负责加载地图、AMCL和move_base。
+    -->
+    <include
+        file="$(find upros_navigation)/launch/navigation.launch">
+
+        <arg
+            name="map_name"
+            value="$(arg map_name)"/>
+    </include>
+
+    <!-- ================================================== -->
+    <!-- 3. 启动激光串口控制 -->
+    <!-- ================================================== -->
+
+    <include
+        file="$(find shoot_robot)/launch/shoot_control.launch">
+
+        <arg
+            name="port"
+            value="$(arg shooter_port)"/>
+
+        <arg
+            name="max_laser_on_time"
+            value="$(arg max_laser_on_time)"/>
+    </include>
+
+    <!-- ================================================== -->
+    <!-- 4. 启动AprilTag识别 -->
+    <!-- ================================================== -->
+
+    <include
+        file="$(find clean_desktop_robot)/launch/recognize_apriltag.launch"/>
+
+    <!-- ================================================== -->
+    <!-- 5. 可选：启动9靶比赛主流程 -->
+    <!-- ================================================== -->
+
+    <node
+        if="$(arg start_task)"
+        pkg="shoot_robot"
+        type="shoot_robot_node"
+        name="shoot_robot_controller"
+        output="screen">
+
+        <!--
+            加载9个观察点和返回点。
+            参数将进入 shoot_robot_controller 的私有参数空间。
+        -->
+        <rosparam
+            command="load"
+            file="$(find shoot_robot)/config/targets.yaml"/>
+
+        <!-- 导航坐标系 -->
+        <param
+            name="frame_id"
+            value="map"/>
+
+        <!-- move_base动作服务 -->
+        <param
+            name="move_base_action"
+            value="/move_base"/>
+
+        <!-- 等待move_base启动的最长时间 -->
+        <param
+            name="move_base_server_timeout"
+            value="30.0"/>
+
+        <!-- 每个观察点允许的最长导航时间 -->
+        <param
+            name="navigation_timeout"
+            value="30.0"/>
+
+        <!-- 导航失败后的重试次数 -->
+        <param
+            name="navigation_retries"
+            value="1"/>
+
+        <!-- 某个靶位导航失败后继续下一个靶位 -->
+        <param
+            name="continue_after_navigation_failure"
+            value="true"/>
+
+        <!-- 激光关闭服务 -->
+        <param
+            name="close_service"
+            value="/close"/>
+
+        <!-- 等待激光关闭服务的最长时间 -->
+        <param
+            name="close_service_wait_timeout"
+            value="10.0"/>
+
+        <!--
+            读取 apriltag_detect.cpp 产生的射击结果。
+            必须与 shoot_tag_1.launch 中的 result_param 相同。
+        -->
+        <param
+            name="shoot_result_param"
+            value="/shoot_robot/last_shoot_success"/>
+
+        <!-- 某个靶位识别或射击失败后继续下一个 -->
+        <param
+            name="continue_after_shoot_failure"
+            value="true"/>
+
+    </node>
+</launch>
